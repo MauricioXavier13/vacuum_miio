@@ -4,7 +4,8 @@
 #  - counter for each room to select how many cleans will be made;
 #  - scripts for each folder (check scripts in this repository);
 
-http://prntscr.com/10wj0r7
+#Preview
+#http://prntscr.com/10wj0r7
 
 type: vertical-stack
 cards:
