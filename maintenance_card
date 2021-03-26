@@ -1,0 +1,82 @@
+# Card with the time left for the maintenance of each consumable.
+# You can also reset the time left by tapping the bar and confirm in the pop-up.
+
+# For now, you can dismiss the swipe card and use just the entities one.
+
+
+type: 'custom:swipe-card'
+cards:
+  - type: 'custom:bar-card'
+    entities:
+      - type: attribute
+        entity: vacuum.roborock
+        attribute: main_brush_left
+        name: Main Brush
+        max: 300
+        icon: 'mdi:broom'
+        tap_action:
+          action: call-service
+          service: vacuum.start
+          service_data:
+            entity_id: vacuum.roborock
+            command: reset_consumable
+            params:
+              key:
+                - side_brush_work_time
+          confirmation:
+            text: Do you want to reset Main Brush?
+      - type: attribute
+        entity: vacuum.roborock
+        attribute: side_brush_left
+        name: Side Brush
+        max: 200
+        icon: 'mdi:concourse-ci'
+        tap_action:
+          action: call-service
+          service: vacuum.start
+          service_data:
+            entity_id: vacuum.roborock
+            command: reset_consumable
+            params:
+              key:
+                - side_brush_work_time
+          confirmation:
+            text: Do you want to reset Side Brush?
+      - type: attribute
+        entity: vacuum.roborock
+        attribute: filter_left
+        name: Filter Left
+        max: 150
+        icon: 'mdi:air-filter'
+        tap_action:
+          action: call-service
+          service: vacuum.start
+          service_data:
+            entity_id: vacuum.roborock
+            command: reset_consumable
+            params:
+              key:
+                - filter_work_time
+          confirmation:
+            text: Do you want to reset Filter?
+      - type: attribute
+        entity: vacuum.roborock
+        attribute: sensor_dirty_left
+        name: Sensor Dirty
+        max: 30
+        icon: 'mdi:leak'
+        tap_action:
+          action: call-service
+          service: vacuum.start
+          service_data:
+            entity_id: vacuum.roborock
+            command: reset_consumable
+            params:
+              key:
+                - sensor_dirty_time
+          confirmation:
+            text: Do you want to reset Sensor?
+    title: Maintenance
+    unit_of_measurement: h
+    positions:
+      value: inside
