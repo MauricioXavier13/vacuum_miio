@@ -1,7 +1,6 @@
 # Picture elements with vacuum and main controls
 
 
-
 type: picture-elements
 elements:
   - type: state-label
