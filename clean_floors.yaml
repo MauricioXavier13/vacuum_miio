@@ -1,7 +1,26 @@
 script:
-#######################################################
-## Roborock S5 Max - Aspirar divisões com repetições ##
-#######################################################
+################################################
+## Roborock S5 Max - Clean rooms with repeats ##
+################################################
+
+# You need to find the segments/rooms to send in the params.
+# For more information about this see:
+# https://www.home-assistant.io/integrations/xiaomi_miio#retrieving-room-numbers
+
+####### This configuration is settled to multi floor setup. 
+####### Due to the map loaded in the app (mi home or roborock) you'll need to perform first a global clean (start) to load the map so the app/vacuum can load the correct map.
+####### Try the delay and define by your own. In some cases 30 seconds is enough.
+
+
+###### To single floor setups, just remove
+##     - service: vacuum.start
+##        data:
+##          entity_id: vacuum.roborock
+##      - delay: "00:01:00"
+##     - service: vacuum.stop
+##        data:
+##          entity_id: vacuum.roborock
+##     - delay: "00:00:03"
 
   aspirar_rc:
     alias: Aspirar Rés do Chão
