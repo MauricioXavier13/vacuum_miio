@@ -18,10 +18,12 @@ Pre-requisites:
   - card-tools | https://github.com/thomasloven/lovelace-card-tools
 
 # Discover your segments params:
-# Use miio command-line tool:
+  Use miio command-line tool:
     miiocli vacuum --ip <ip of the vacuum> --token <your vacuum token> get_room_mapping
     Bash
   - https://www.home-assistant.io/integrations/xiaomi_miio#retrieving-room-numbers
+  
+  You can also testing it or discovered it by sending random params with segment clean service and see what rooms is painted in mi home app.
 
 
 # main_controls_card
