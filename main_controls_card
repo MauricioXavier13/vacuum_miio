@@ -5,6 +5,7 @@
 #1. Copy the code below
 #2. Change entity: vacuum.roborock by your own vacuum entity.
 #3. Put the 2515610638.jpg in the respective path image: /local/roborock/2515610638.jpg
+#4. Discover your coordinates to send to bin location (last button) (docking station is 25500,25500)
 
 type: picture-elements
 elements:
@@ -139,8 +140,22 @@ elements:
         style:
           button:
             color: darkred
+                  - entity: vacuum.roborock
+        icon: 'mdi:delete-empty'
+        name: false
+        layout: icon|name
+        tap_action:
+          action: call-service
+          service: xiaomi_miio.vacuum_goto
+          service_data:
+            entity_id: vacuum.roborock
+            x_coord: 26700
+            y_coord: 36100
+        style:
+          button:
+            color: darkred
     style:
       top: 82%
-      left: 25%
+      left: 20%
       transform: scale(1.3)
 image: /local/roborock/2515610638.jpg
