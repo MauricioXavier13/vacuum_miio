@@ -3,6 +3,23 @@ script:
 ## Roborock S5 Max - Clean rooms with repeats | 2 floors ##
 ###########################################################
 
+### The vaccum.start, delay, vacuum.stop and delay are used in multifloors houses. 
+### Because, we cannot discover or get the floor number and the segments are also repeated from floor to floor,
+### We should send a general clean command first, so the vacuum can load the concrete map where it is placed or performing the clean.
+### Then we just stop, give him a delay (3 seconds), and send the correct segments/room to clean.
+### You can test and adjust the first (1 minute delay) and see if in your case its less than 1 minute.
+### I've tested and in some cases the maps loaded in 20 seconds and in some other scenarios the concrete map loads in more than 45 seconds.
+
+### If you have a single floor you can dismiss:
+#      - service: vacuum.start
+#        data:
+#          entity_id: vacuum.roborock
+#      - delay: "00:01:00"
+#      - service: vacuum.stop
+#        data:
+#          entity_id: vacuum.roborock
+#      - delay: "00:00:03"
+### And start immediately with service: xiaomi_miio.vacuum_clean_segment
 
   aspirar_rc:
     alias: Aspirar Rés do Chão
