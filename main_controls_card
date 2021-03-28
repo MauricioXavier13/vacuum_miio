@@ -1,6 +1,11 @@
 # Picture elements with vacuum and main controls
 #! Don't forget to use the images and locate in the appropriate folder
 
+#Step by Step:
+#1. Copy the code below
+#2. Change entity: vacuum.roborock by your own vacuum entity.
+#3. Put the 2515610638.jpg in the respective path image: /local/roborock/2515610638.jpg
+
 type: picture-elements
 elements:
   - type: state-label
