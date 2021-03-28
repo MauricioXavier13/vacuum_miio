@@ -22,6 +22,9 @@ script:
 ### And start immediately with service: xiaomi_miio.vacuum_clean_segment.
 ### Don't forget to get your segments params.
 
+
+######## Ground floor ########
+
   aspirar_rc:
     alias: Aspirar Rés do Chão
     sequence:
@@ -82,6 +85,8 @@ script:
                   20,20,20,
                {%- endif %}
             {%- endif %}]
+
+######## First floor ########
 
   aspirar_piso1:
     alias: Aspirar Piso1
