@@ -54,7 +54,15 @@ Pre-requisites:
 
 ![image](https://user-images.githubusercontent.com/74264882/112759792-8583e700-8fec-11eb-8fd5-32f21d98d744.png)
 
+# Part of Global view
+
+![image](https://user-images.githubusercontent.com/74264882/112759855-cbd94600-8fec-11eb-9844-a19514c6c31d.png)
+
+# GLobal view with Clean Profile 1
+
+![image](https://user-images.githubusercontent.com/74264882/112759876-e0b5d980-8fec-11eb-985e-20f9f175c638.png)
+
+
 Instructions step by step inside each card/Configuration file
 
-![Screenshot_20210326-211007](https://user-images.githubusercontent.com/74264882/112693217-29985180-8e78-11eb-92e5-6ae0ec4c7024.jpg)
 ![Screenshot_20210326-211027](https://user-images.githubusercontent.com/74264882/112693236-32892300-8e78-11eb-9ba3-c1e965c91493.jpg)
