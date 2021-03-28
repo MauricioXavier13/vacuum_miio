@@ -18,8 +18,7 @@ Pre-requisites:
   - card-tools | https://github.com/thomasloven/lovelace-card-tools
 
 
-# Main-control card
-
+# Main_controls_card
 
 <img width="268" alt="picture_elements_vacuum" src="https://user-images.githubusercontent.com/74264882/112748313-c959fa80-8fb2-11eb-8c1c-320e1f53a91f.png">
 
