@@ -1,5 +1,7 @@
 ###Simple animated custom button card to indicate that you should swip the cards to change between manual cleans and clean profiles
 
+#Step by Step:
+#1. Copy the code below to a manual card
 
 type: 'custom:button-card'
 icon: 'mdi:gesture-swipe-horizontal'
