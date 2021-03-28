@@ -10,7 +10,7 @@ script:
 ### You can test and adjust the first (1 minute delay) and see if in your case its less than 1 minute.
 ### I've tested and in some cases the maps loaded in 20 seconds and in some other scenarios the concrete map loads in more than 45 seconds.
 
-### If you have a single floor you can dismiss:
+### If you have a single floor you can dismiss from the scripts below:
 #      - service: vacuum.start
 #        data:
 #          entity_id: vacuum.roborock
