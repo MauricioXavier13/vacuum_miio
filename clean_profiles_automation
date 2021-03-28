@@ -1,0 +1,58 @@
+###Automations related to clean profiles
+
+
+############### Clean Profile 1 ###############
+
+alias: Clean Profile 1
+description: ''
+trigger:
+  - platform: time
+    at: input_datetime.clean_automation_daily1
+  - platform: time
+    at: input_datetime.clean_automation_schedule1
+condition: []
+action:
+  - service: notify.mobile_app_oneplus_a5010
+    data:
+      title: Profile 1
+      message: Starting vacuum with profile 1 configuration
+  - service: script.clean_profile_1
+mode: single
+
+
+############### Clean Profile 2 ###############
+
+alias: Clean Profile 2
+description: ''
+trigger:
+  - platform: time
+    at: input_datetime.clean_automation_daily2
+  - platform: time
+    at: input_datetime.clean_automation_schedule2
+condition: []
+action:
+  - service: notify.mobile_app_oneplus_a5010
+    data:
+      title: Profile 2
+      message: Starting vacuum with profile 2 configuration
+  - service: script.clean_profile_2
+mode: single
+
+
+############### Clean Profile 2 ###############
+
+alias: Clean Profile 3
+description: ''
+trigger:
+  - platform: time
+    at: input_datetime.clean_automation_daily3
+  - platform: time
+    at: input_datetime.clean_automation_schedule3
+condition: []
+action:
+  - service: notify.mobile_app_oneplus_a5010
+    data:
+      title: Profile 3
+      message: Starting vacuum with profile 3 configuration
+  - service: script.clean_profile_3
+mode: single
