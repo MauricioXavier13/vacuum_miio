@@ -1,0 +1,18 @@
+###Simple animated custom button card to indicate that you should swip the cards to change between manual cleans and clean profiles
+
+
+type: 'custom:button-card'
+icon: 'mdi:gesture-swipe-horizontal'
+extra_styles: |
+  @keyframes bounce {
+    0%, 20%, 80%, 100% { transform: translateX(335px); }
+    40% { transform: translateX(345px); }
+    60% { transform: translateX(0px); }
+  }
+styles:
+  card:
+    - width: 50px
+    - background-color: white
+    - animation: bounce 3.5s infinite
+  icon:
+    - color: darkred
