@@ -1,1282 +1,2204 @@
 # Card with floors and room selection. You can also pick how many times do you want to clean each room... You must activate/tap the room to enable and be cleaned.
 
-#Step by Step:
+#Step by Step (manual clean):
 #1. Create one input_boolean helper by room
 #2. Create one counter helper by room (minimum 1 and maximum 3). 
 #     The min and max are not relevant due to the fact that we use configure service but if you want to use and increment card you can still use this counter with the limits.
 #3. Change entities: input_booleans and counters by your own variables/helpers related to each room.
 #4. Put the rooms images in the respective path image associated in each picture-elements room select.
 #5. Create scripts for each floor (check scripts in this repository);
+#Step by Step (clean profiles):
+#6. Create 3 input booleans helpers by room (related to the 3 clean profiles)
+#7. Create 3 input date_time helpers (type: date) by room (related to the 3 clean profiles)
+#   If you just want to use my general helpers in this case, name them like:
+#   - entity: input_datetime.clean_automation_daily1
+#   - entity: input_datetime.clean_automation_daily2
+#   - entity: input_datetime.clean_automation_daily3
+#7. Create 3 input date_time helpers (type: datetime) by room (related to the 3 clean profiles)
+#   If you just want to use my general helpers in this case, name them like:
+#   - entity: input_datetime.clean_automation_schedule1
+#   - entity: input_datetime.clean_automation_schedule2
+#   - entity: input_datetime.clean_automation_schedule3
+#8. Change input booleans entities rooms1, rooms2, rooms 3 and so on (depending on how many rooms do you have).
+#9. Change input datetime (date and time) entities if you wrote with other names than suggested above.
+#10. Create 3 input text helpers by room (related to the name of the 3 clean profiles)
+#   If you just want to use my general helpers in this case, name them like:
+#   - entity: input_text.clean_automation1
+#   - entity: input_text.clean_automation2
+#   - entity: input_text.clean_automation3
+#11. Change input text entities if you wrote with other names than suggested above.
+#12. Create 3 automations related to the 3 clena profiles (check automations file in this repository)
+#   If you just want to use my general automations ids, in this case, name them like:
+#   - entity: automation.clean_profile_1
+#   - entity: automation.clean_profile_2
+#   - entity: automation.clean_profile_3
+#13. Change automations entities if you wrote with other names than suggested above.
 
 #Preview
 #http://prntscr.com/10wj0r7
 
-type: vertical-stack
+type: 'custom:swipe-card'
 cards:
-  - type: horizontal-stack
+  - type: vertical-stack
     cards:
-      - type: 'custom:button-card'
-        name: Rés do Chão
-        styles:
-          card:
-            - background-color: var(--accent-color)
       - type: horizontal-stack
         cards:
           - type: 'custom:button-card'
-            color_type: blank-card
-          - type: 'custom:button-card'
-            icon: 'mdi:play'
-            tap_action:
-              action: call-service
-              service: script.aspirar_rc
+            name: Rés do Chão
             styles:
               card:
-                - width: 70px
                 - background-color: var(--accent-color)
+          - type: horizontal-stack
+            cards:
+              - type: 'custom:button-card'
+                color_type: blank-card
+              - type: 'custom:button-card'
+                icon: 'mdi:play'
+                tap_action:
+                  action: call-service
+                  service: script.aspirar_rc
+                styles:
+                  card:
+                    - width: 70px
+                    - background-color: var(--accent-color)
+              - type: 'custom:button-card'
+                icon: 'mdi:checkbox-multiple-marked'
+                tap_action:
+                  action: call-service
+                  service: input_boolean.toggle
+                  service_data:
+                    entity_id:
+                      - input_boolean.aspirar_cozinha
+                      - input_boolean.aspirar_corredor
+                      - input_boolean.aspirar_escritorio
+                      - input_boolean.aspirar_wc_rc
+                      - input_boolean.aspirar_sala
+                styles:
+                  card:
+                    - width: 70px
+                    - background-color: var(--accent-color)
+      - type: grid
+        cards:
+          - type: picture-elements
+            elements:
+              - type: 'custom:button-card'
+                entity: input_boolean.aspirar_cozinha
+                layout: name_state
+                name: ' '
+                show_icon: false
+                show_state: false
+                show_name: true
+                styles:
+                  card:
+                    - width: 160px
+                    - height: 110px
+                    - opacity: 85%
+                style:
+                  top: 50%
+                  left: 50%
+                state:
+                  - value: 'on'
+                    styles:
+                      card:
+                        - filter: opacity(1%)
+              - type: 'custom:text-element'
+                text: Cozinha
+                style:
+                  top: 20%
+                  left: 25%
+                  font-weight: bold
+              - type: 'custom:paper-buttons-row'
+                buttons:
+                  - entity: counter.aspirar_cozinha_x
+                    icon: 'mdi:numeric-1-circle'
+                    name: false
+                    layout: icon|name
+                    tap_action:
+                      action: call-service
+                      service: counter.configure
+                      service_data:
+                        value: '1'
+                        entity_id: counter.aspirar_cozinha_x
+                    style:
+                      button:
+                        height: 5px
+                        width: 5px
+                      icon:
+                        height: 5px
+                        width: 5px
+                    state_styles:
+                      '1':
+                        icon:
+                          color: var(--accent-color)
+                  - entity: counter.aspirar_cozinha_x
+                    icon: 'mdi:numeric-2-circle'
+                    name: false
+                    layout: icon|name
+                    tap_action:
+                      action: call-service
+                      service: counter.configure
+                      service_data:
+                        value: '2'
+                        entity_id: counter.aspirar_cozinha_x
+                    style:
+                      button:
+                        height: 5px
+                        width: 5px
+                        margin: 20%
+                      icon:
+                        height: 5px
+                        width: 5px
+                    state_styles:
+                      '2':
+                        icon:
+                          color: var(--accent-color)
+                  - entity: counter.aspirar_cozinha_x
+                    icon: 'mdi:numeric-3-circle'
+                    name: false
+                    layout: icon|name
+                    tap_action:
+                      action: call-service
+                      service: counter.configure
+                      service_data:
+                        value: '3'
+                        entity_id: counter.aspirar_cozinha_x
+                    style:
+                      button:
+                        height: 5px
+                        width: 5px
+                      icon:
+                        height: 5px
+                        width: 5px
+                    state_styles:
+                      '3':
+                        icon:
+                          color: var(--accent-color)
+                style:
+                  top: 40%
+                  left: 15%
+                  transform: scale(1.7)
+            image: /local/roborock/kitchen.jpg
+          - type: picture-elements
+            elements:
+              - type: 'custom:button-card'
+                entity: input_boolean.aspirar_corredor
+                layout: name_state
+                name: ' '
+                show_icon: false
+                show_state: false
+                show_name: true
+                styles:
+                  card:
+                    - width: 160px
+                    - height: 110px
+                    - opacity: 85%
+                style:
+                  top: 50%
+                  left: 50%
+                state:
+                  - value: 'on'
+                    styles:
+                      card:
+                        - filter: opacity(1%)
+              - type: 'custom:text-element'
+                text: Corredor
+                style:
+                  top: 20%
+                  left: 25%
+                  font-weight: bold
+              - type: 'custom:paper-buttons-row'
+                buttons:
+                  - entity: counter.aspirar_corredor_x
+                    icon: 'mdi:numeric-1-circle'
+                    name: false
+                    layout: icon|name
+                    tap_action:
+                      action: call-service
+                      service: counter.configure
+                      service_data:
+                        value: '1'
+                        entity_id: counter.aspirar_corredor_x
+                    style:
+                      button:
+                        height: 5px
+                        width: 5px
+                      icon:
+                        height: 5px
+                        width: 5px
+                    state_styles:
+                      '1':
+                        icon:
+                          color: var(--accent-color)
+                  - entity: counter.aspirar_corredor_x
+                    icon: 'mdi:numeric-2-circle'
+                    name: false
+                    layout: icon|name
+                    tap_action:
+                      action: call-service
+                      service: counter.configure
+                      service_data:
+                        value: '2'
+                        entity_id: counter.aspirar_corredor_x
+                    style:
+                      button:
+                        height: 5px
+                        width: 5px
+                        margin: 20%
+                      icon:
+                        height: 5px
+                        width: 5px
+                    state_styles:
+                      '2':
+                        icon:
+                          color: var(--accent-color)
+                  - entity: counter.aspirar_corredor_x
+                    icon: 'mdi:numeric-3-circle'
+                    name: false
+                    layout: icon|name
+                    tap_action:
+                      action: call-service
+                      service: counter.configure
+                      service_data:
+                        value: '3'
+                        entity_id: counter.aspirar_corredor_x
+                    style:
+                      button:
+                        height: 5px
+                        width: 5px
+                      icon:
+                        height: 5px
+                        width: 5px
+                    state_styles:
+                      '3':
+                        icon:
+                          color: var(--accent-color)
+                style:
+                  top: 40%
+                  left: 15%
+                  transform: scale(1.7)
+            image: /local/roborock/hall_rc.jpg
+          - type: picture-elements
+            elements:
+              - type: 'custom:button-card'
+                entity: input_boolean.aspirar_escritorio
+                layout: name_state
+                name: ' '
+                show_icon: false
+                show_state: false
+                show_name: true
+                styles:
+                  card:
+                    - width: 160px
+                    - height: 110px
+                    - opacity: 85%
+                style:
+                  top: 50%
+                  left: 50%
+                state:
+                  - value: 'on'
+                    styles:
+                      card:
+                        - filter: opacity(1%)
+              - type: 'custom:text-element'
+                text: Escritório
+                style:
+                  top: 20%
+                  left: 25%
+                  font-weight: bold
+              - type: 'custom:paper-buttons-row'
+                buttons:
+                  - entity: counter.aspirar_escritorio_x
+                    icon: 'mdi:numeric-1-circle'
+                    name: false
+                    layout: icon|name
+                    tap_action:
+                      action: call-service
+                      service: counter.configure
+                      service_data:
+                        value: '1'
+                        entity_id: counter.aspirar_escritorio_x
+                    style:
+                      button:
+                        height: 5px
+                        width: 5px
+                      icon:
+                        height: 5px
+                        width: 5px
+                    state_styles:
+                      '1':
+                        icon:
+                          color: var(--accent-color)
+                  - entity: counter.aspirar_escritorio_x
+                    icon: 'mdi:numeric-2-circle'
+                    name: false
+                    layout: icon|name
+                    tap_action:
+                      action: call-service
+                      service: counter.configure
+                      service_data:
+                        value: '2'
+                        entity_id: counter.aspirar_escritorio_x
+                    style:
+                      button:
+                        height: 5px
+                        width: 5px
+                        margin: 20%
+                      icon:
+                        height: 5px
+                        width: 5px
+                    state_styles:
+                      '2':
+                        icon:
+                          color: var(--accent-color)
+                  - entity: counter.aspirar_escritorio_x
+                    icon: 'mdi:numeric-3-circle'
+                    name: false
+                    layout: icon|name
+                    tap_action:
+                      action: call-service
+                      service: counter.configure
+                      service_data:
+                        value: '3'
+                        entity_id: counter.aspirar_escritorio_x
+                    style:
+                      button:
+                        height: 5px
+                        width: 5px
+                      icon:
+                        height: 5px
+                        width: 5px
+                    state_styles:
+                      '3':
+                        icon:
+                          color: var(--accent-color)
+                style:
+                  top: 40%
+                  left: 15%
+                  transform: scale(1.7)
+            image: /local/roborock/office2.jpg
+          - type: picture-elements
+            elements:
+              - type: 'custom:button-card'
+                entity: input_boolean.aspirar_wc_rc
+                layout: name_state
+                name: ' '
+                show_icon: false
+                show_state: false
+                show_name: true
+                styles:
+                  card:
+                    - width: 160px
+                    - height: 110px
+                    - opacity: 85%
+                style:
+                  top: 50%
+                  left: 50%
+                state:
+                  - value: 'on'
+                    styles:
+                      card:
+                        - filter: opacity(1%)
+              - type: 'custom:text-element'
+                text: WC R/C
+                style:
+                  top: 20%
+                  left: 25%
+                  font-weight: bold
+              - type: 'custom:paper-buttons-row'
+                buttons:
+                  - entity: counter.aspirar_wc_rc_x
+                    icon: 'mdi:numeric-1-circle'
+                    name: false
+                    layout: icon|name
+                    tap_action:
+                      action: call-service
+                      service: counter.configure
+                      service_data:
+                        value: '1'
+                        entity_id: counter.aspirar_wc_rc_x
+                    style:
+                      button:
+                        height: 5px
+                        width: 5px
+                      icon:
+                        height: 5px
+                        width: 5px
+                    state_styles:
+                      '1':
+                        icon:
+                          color: var(--accent-color)
+                  - entity: counter.aspirar_wc_rc_x
+                    icon: 'mdi:numeric-2-circle'
+                    name: false
+                    layout: icon|name
+                    tap_action:
+                      action: call-service
+                      service: counter.configure
+                      service_data:
+                        value: '2'
+                        entity_id: counter.aspirar_wc_rc_x
+                    style:
+                      button:
+                        height: 5px
+                        width: 5px
+                        margin: 20%
+                      icon:
+                        height: 5px
+                        width: 5px
+                    state_styles:
+                      '2':
+                        icon:
+                          color: var(--accent-color)
+                  - entity: counter.aspirar_wc_rc_x
+                    icon: 'mdi:numeric-3-circle'
+                    name: false
+                    layout: icon|name
+                    tap_action:
+                      action: call-service
+                      service: counter.configure
+                      service_data:
+                        value: '3'
+                        entity_id: counter.aspirar_wc_rc_x
+                    style:
+                      button:
+                        height: 5px
+                        width: 5px
+                      icon:
+                        height: 5px
+                        width: 5px
+                    state_styles:
+                      '3':
+                        icon:
+                          color: var(--accent-color)
+                style:
+                  top: 40%
+                  left: 15%
+                  transform: scale(1.7)
+            image: /local/roborock/wc RC.jpg
+          - type: picture-elements
+            elements:
+              - type: 'custom:button-card'
+                entity: input_boolean.aspirar_sala
+                layout: name_state
+                name: ' '
+                show_icon: false
+                show_state: false
+                show_name: true
+                styles:
+                  card:
+                    - width: 160px
+                    - height: 110px
+                    - opacity: 85%
+                style:
+                  top: 50%
+                  left: 50%
+                state:
+                  - value: 'on'
+                    styles:
+                      card:
+                        - filter: opacity(1%)
+              - type: 'custom:text-element'
+                text: Sala
+                style:
+                  top: 20%
+                  left: 25%
+                  font-weight: bold
+              - type: 'custom:paper-buttons-row'
+                buttons:
+                  - entity: counter.aspirar_sala_x
+                    icon: 'mdi:numeric-1-circle'
+                    name: false
+                    layout: icon|name
+                    tap_action:
+                      action: call-service
+                      service: counter.configure
+                      service_data:
+                        value: '1'
+                        entity_id: counter.aspirar_sala_x
+                    style:
+                      button:
+                        height: 5px
+                        width: 5px
+                      icon:
+                        height: 5px
+                        width: 5px
+                    state_styles:
+                      '1':
+                        icon:
+                          color: var(--accent-color)
+                  - entity: counter.aspirar_sala_x
+                    icon: 'mdi:numeric-2-circle'
+                    name: false
+                    layout: icon|name
+                    tap_action:
+                      action: call-service
+                      service: counter.configure
+                      service_data:
+                        value: '2'
+                        entity_id: counter.aspirar_sala_x
+                    style:
+                      button:
+                        height: 5px
+                        width: 5px
+                        margin: 20%
+                      icon:
+                        height: 5px
+                        width: 5px
+                    state_styles:
+                      '2':
+                        icon:
+                          color: var(--accent-color)
+                  - entity: counter.aspirar_sala_x
+                    icon: 'mdi:numeric-3-circle'
+                    name: false
+                    layout: icon|name
+                    tap_action:
+                      action: call-service
+                      service: counter.configure
+                      service_data:
+                        value: '3'
+                        entity_id: counter.aspirar_sala_x
+                    style:
+                      button:
+                        height: 5px
+                        width: 5px
+                      icon:
+                        height: 5px
+                        width: 5px
+                    state_styles:
+                      '3':
+                        icon:
+                          color: var(--accent-color)
+                style:
+                  top: 40%
+                  left: 15%
+                  transform: scale(1.7)
+            image: /local/roborock/sala4.jpg
+          - type: picture-elements
+            elements:
+              - type: 'custom:button-card'
+                entity: input_boolean.aspirar_hall_rc
+                layout: name_state
+                name: ' '
+                show_icon: false
+                show_state: false
+                show_name: true
+                styles:
+                  card:
+                    - width: 160px
+                    - height: 110px
+                    - opacity: 85%
+                style:
+                  top: 50%
+                  left: 50%
+                state:
+                  - value: 'on'
+                    styles:
+                      card:
+                        - filter: opacity(1%)
+              - type: 'custom:text-element'
+                text: Hall R/C
+                style:
+                  top: 20%
+                  left: 25%
+                  font-weight: bold
+              - type: 'custom:paper-buttons-row'
+                buttons:
+                  - entity: counter.aspirar_hall_rc_x
+                    icon: 'mdi:numeric-1-circle'
+                    name: false
+                    layout: icon|name
+                    tap_action:
+                      action: call-service
+                      service: counter.configure
+                      service_data:
+                        value: '1'
+                        entity_id: counter.aspirar_hall_rc_x
+                    style:
+                      button:
+                        height: 5px
+                        width: 5px
+                      icon:
+                        height: 5px
+                        width: 5px
+                    state_styles:
+                      '1':
+                        icon:
+                          color: var(--accent-color)
+                  - entity: counter.aspirar_hall_rc_x
+                    icon: 'mdi:numeric-2-circle'
+                    name: false
+                    layout: icon|name
+                    tap_action:
+                      action: call-service
+                      service: counter.configure
+                      service_data:
+                        value: '2'
+                        entity_id: counter.aspirar_hall_rc_x
+                    style:
+                      button:
+                        height: 5px
+                        width: 5px
+                        margin: 20%
+                      icon:
+                        height: 5px
+                        width: 5px
+                    state_styles:
+                      '2':
+                        icon:
+                          color: var(--accent-color)
+                  - entity: counter.aspirar_hall_rc_x
+                    icon: 'mdi:numeric-3-circle'
+                    name: false
+                    layout: icon|name
+                    tap_action:
+                      action: call-service
+                      service: counter.configure
+                      service_data:
+                        value: '3'
+                        entity_id: counter.aspirar_hall_rc_x
+                    style:
+                      button:
+                        height: 5px
+                        width: 5px
+                      icon:
+                        height: 5px
+                        width: 5px
+                    state_styles:
+                      '3':
+                        icon:
+                          color: var(--accent-color)
+                style:
+                  top: 40%
+                  left: 15%
+                  transform: scale(1.7)
+            image: /local/roborock/hall_rc.jpg
+        square: false
+      - type: horizontal-stack
+        cards:
           - type: 'custom:button-card'
-            icon: 'mdi:checkbox-multiple-marked'
+            name: Piso 1
+            styles:
+              card:
+                - background-color: var(--accent-color)
+          - type: horizontal-stack
+            cards:
+              - type: 'custom:button-card'
+                color_type: blank-card
+              - type: 'custom:button-card'
+                icon: 'mdi:play'
+                tap_action:
+                  action: call-service
+                  service: script.aspirar_piso1
+                styles:
+                  card:
+                    - width: 70px
+                    - background-color: var(--accent-color)
+              - type: 'custom:button-card'
+                icon: 'mdi:checkbox-multiple-marked'
+                tap_action:
+                  action: call-service
+                  service: input_boolean.toggle
+                  service_data:
+                    entity_id:
+                      - input_boolean.aspirar_francisco
+                      - input_boolean.aspirar_maria
+                      - input_boolean.aspirar_hall_piso1
+                      - input_boolean.aspirar_wc_piso1
+                      - input_boolean.aspirar_suite
+                      - input_boolean.aspirar_wc_suite
+                styles:
+                  card:
+                    - width: 70px
+                    - background-color: var(--accent-color)
+      - type: grid
+        cards:
+          - type: picture-elements
+            elements:
+              - type: 'custom:button-card'
+                entity: input_boolean.aspirar_francisco
+                layout: name_state
+                name: ' '
+                show_icon: false
+                show_state: false
+                show_name: true
+                styles:
+                  card:
+                    - width: 160px
+                    - height: 110px
+                    - opacity: 85%
+                style:
+                  top: 50%
+                  left: 50%
+                state:
+                  - value: 'on'
+                    styles:
+                      card:
+                        - filter: opacity(1%)
+              - type: 'custom:text-element'
+                text: Francisco
+                style:
+                  top: 20%
+                  left: 25%
+                  font-weight: bold
+              - type: 'custom:paper-buttons-row'
+                buttons:
+                  - entity: counter.aspirar_francisco_x
+                    icon: 'mdi:numeric-1-circle'
+                    name: false
+                    layout: icon|name
+                    tap_action:
+                      action: call-service
+                      service: counter.configure
+                      service_data:
+                        value: '1'
+                        entity_id: counter.aspirar_francisco_x
+                    style:
+                      button:
+                        height: 5px
+                        width: 5px
+                      icon:
+                        height: 5px
+                        width: 5px
+                    state_styles:
+                      '1':
+                        icon:
+                          color: var(--accent-color)
+                  - entity: counter.aspirar_francisco_x
+                    icon: 'mdi:numeric-2-circle'
+                    name: false
+                    layout: icon|name
+                    tap_action:
+                      action: call-service
+                      service: counter.configure
+                      service_data:
+                        value: '2'
+                        entity_id: counter.aspirar_francisco_x
+                    style:
+                      button:
+                        height: 5px
+                        width: 5px
+                        margin: 20%
+                      icon:
+                        height: 5px
+                        width: 5px
+                    state_styles:
+                      '2':
+                        icon:
+                          color: var(--accent-color)
+                  - entity: counter.aspirar_francisco_x
+                    icon: 'mdi:numeric-3-circle'
+                    name: false
+                    layout: icon|name
+                    tap_action:
+                      action: call-service
+                      service: counter.configure
+                      service_data:
+                        value: '3'
+                        entity_id: counter.aspirar_francisco_x
+                    style:
+                      button:
+                        height: 5px
+                        width: 5px
+                      icon:
+                        height: 5px
+                        width: 5px
+                    state_styles:
+                      '3':
+                        icon:
+                          color: var(--accent-color)
+                style:
+                  top: 40%
+                  left: 15%
+                  transform: scale(1.7)
+            image: /local/roborock/kitchen.jpg
+          - type: picture-elements
+            elements:
+              - type: 'custom:button-card'
+                entity: input_boolean.aspirar_maria
+                layout: name_state
+                name: ' '
+                show_icon: false
+                show_state: false
+                show_name: true
+                styles:
+                  card:
+                    - width: 160px
+                    - height: 110px
+                    - opacity: 85%
+                style:
+                  top: 50%
+                  left: 50%
+                state:
+                  - value: 'on'
+                    styles:
+                      card:
+                        - filter: opacity(1%)
+              - type: 'custom:text-element'
+                text: Maria
+                style:
+                  top: 20%
+                  left: 25%
+                  font-weight: bold
+              - type: 'custom:paper-buttons-row'
+                buttons:
+                  - entity: counter.aspirar_maria_x
+                    icon: 'mdi:numeric-1-circle'
+                    name: false
+                    layout: icon|name
+                    tap_action:
+                      action: call-service
+                      service: counter.configure
+                      service_data:
+                        value: '1'
+                        entity_id: counter.aspirar_maria_x
+                    style:
+                      button:
+                        height: 5px
+                        width: 5px
+                      icon:
+                        height: 5px
+                        width: 5px
+                    state_styles:
+                      '1':
+                        icon:
+                          color: var(--accent-color)
+                  - entity: counter.aspirar_maria_x
+                    icon: 'mdi:numeric-2-circle'
+                    name: false
+                    layout: icon|name
+                    tap_action:
+                      action: call-service
+                      service: counter.configure
+                      service_data:
+                        value: '2'
+                        entity_id: counter.aspirar_maria_x
+                    style:
+                      button:
+                        height: 5px
+                        width: 5px
+                        margin: 20%
+                      icon:
+                        height: 5px
+                        width: 5px
+                    state_styles:
+                      '2':
+                        icon:
+                          color: var(--accent-color)
+                  - entity: counter.aspirar_maria_x
+                    icon: 'mdi:numeric-3-circle'
+                    name: false
+                    layout: icon|name
+                    tap_action:
+                      action: call-service
+                      service: counter.configure
+                      service_data:
+                        value: '3'
+                        entity_id: counter.aspirar_maria_x
+                    style:
+                      button:
+                        height: 5px
+                        width: 5px
+                      icon:
+                        height: 5px
+                        width: 5px
+                    state_styles:
+                      '3':
+                        icon:
+                          color: var(--accent-color)
+                style:
+                  top: 40%
+                  left: 15%
+                  transform: scale(1.7)
+            image: /local/roborock/hall_rc.jpg
+          - type: picture-elements
+            elements:
+              - type: 'custom:button-card'
+                entity: input_boolean.aspirar_wc_piso1
+                layout: name_state
+                name: ' '
+                show_icon: false
+                show_state: false
+                show_name: true
+                styles:
+                  card:
+                    - width: 160px
+                    - height: 110px
+                    - opacity: 85%
+                style:
+                  top: 50%
+                  left: 50%
+                state:
+                  - value: 'on'
+                    styles:
+                      card:
+                        - filter: opacity(1%)
+              - type: 'custom:text-element'
+                text: WC Piso1
+                style:
+                  top: 20%
+                  left: 25%
+                  font-weight: bold
+              - type: 'custom:paper-buttons-row'
+                buttons:
+                  - entity: counter.aspirar_wc_piso1_x
+                    icon: 'mdi:numeric-1-circle'
+                    name: false
+                    layout: icon|name
+                    tap_action:
+                      action: call-service
+                      service: counter.configure
+                      service_data:
+                        value: '1'
+                        entity_id: counter.aspirar_wc_piso1_x
+                    style:
+                      button:
+                        height: 5px
+                        width: 5px
+                      icon:
+                        height: 5px
+                        width: 5px
+                    state_styles:
+                      '1':
+                        icon:
+                          color: var(--accent-color)
+                  - entity: counter.aspirar_wc_piso1_x
+                    icon: 'mdi:numeric-2-circle'
+                    name: false
+                    layout: icon|name
+                    tap_action:
+                      action: call-service
+                      service: counter.configure
+                      service_data:
+                        value: '2'
+                        entity_id: counter.aspirar_wc_piso1_x
+                    style:
+                      button:
+                        height: 5px
+                        width: 5px
+                        margin: 20%
+                      icon:
+                        height: 5px
+                        width: 5px
+                    state_styles:
+                      '2':
+                        icon:
+                          color: var(--accent-color)
+                  - entity: counter.aspirar_wc_piso1_x
+                    icon: 'mdi:numeric-3-circle'
+                    name: false
+                    layout: icon|name
+                    tap_action:
+                      action: call-service
+                      service: counter.configure
+                      service_data:
+                        value: '3'
+                        entity_id: counter.aspirar_wc_piso1_x
+                    style:
+                      button:
+                        height: 5px
+                        width: 5px
+                      icon:
+                        height: 5px
+                        width: 5px
+                    state_styles:
+                      '3':
+                        icon:
+                          color: var(--accent-color)
+                style:
+                  top: 40%
+                  left: 15%
+                  transform: scale(1.7)
+            image: /local/roborock/office2.jpg
+          - type: picture-elements
+            elements:
+              - type: 'custom:button-card'
+                entity: input_boolean.aspirar_hall_piso1
+                layout: name_state
+                name: ' '
+                show_icon: false
+                show_state: false
+                show_name: true
+                styles:
+                  card:
+                    - width: 160px
+                    - height: 110px
+                    - opacity: 85%
+                style:
+                  top: 50%
+                  left: 50%
+                state:
+                  - value: 'on'
+                    styles:
+                      card:
+                        - filter: opacity(1%)
+              - type: 'custom:text-element'
+                text: Hall Piso1
+                style:
+                  top: 20%
+                  left: 25%
+                  font-weight: bold
+              - type: 'custom:paper-buttons-row'
+                buttons:
+                  - entity: counter.aspirar_hall_piso1_x
+                    icon: 'mdi:numeric-1-circle'
+                    name: false
+                    layout: icon|name
+                    tap_action:
+                      action: call-service
+                      service: counter.configure
+                      service_data:
+                        value: '1'
+                        entity_id: counter.aspirar_hall_piso1_x
+                    style:
+                      button:
+                        height: 5px
+                        width: 5px
+                      icon:
+                        height: 5px
+                        width: 5px
+                    state_styles:
+                      '1':
+                        icon:
+                          color: var(--accent-color)
+                  - entity: counter.aspirar_hall_piso1_x
+                    icon: 'mdi:numeric-2-circle'
+                    name: false
+                    layout: icon|name
+                    tap_action:
+                      action: call-service
+                      service: counter.configure
+                      service_data:
+                        value: '2'
+                        entity_id: counter.aspirar_hall_piso1_x
+                    style:
+                      button:
+                        height: 5px
+                        width: 5px
+                        margin: 20%
+                      icon:
+                        height: 5px
+                        width: 5px
+                    state_styles:
+                      '2':
+                        icon:
+                          color: var(--accent-color)
+                  - entity: counter.aspirar_hall_piso1_x
+                    icon: 'mdi:numeric-3-circle'
+                    name: false
+                    layout: icon|name
+                    tap_action:
+                      action: call-service
+                      service: counter.configure
+                      service_data:
+                        value: '3'
+                        entity_id: counter.aspirar_hall_piso1_x
+                    style:
+                      button:
+                        height: 5px
+                        width: 5px
+                      icon:
+                        height: 5px
+                        width: 5px
+                    state_styles:
+                      '3':
+                        icon:
+                          color: var(--accent-color)
+                style:
+                  top: 40%
+                  left: 15%
+                  transform: scale(1.7)
+            image: /local/roborock/wc RC.jpg
+          - type: picture-elements
+            elements:
+              - type: 'custom:button-card'
+                entity: input_boolean.aspirar_suite
+                layout: name_state
+                name: ' '
+                show_icon: false
+                show_state: false
+                show_name: true
+                styles:
+                  card:
+                    - width: 160px
+                    - height: 110px
+                    - opacity: 85%
+                style:
+                  top: 50%
+                  left: 50%
+                state:
+                  - value: 'on'
+                    styles:
+                      card:
+                        - filter: opacity(1%)
+              - type: 'custom:text-element'
+                text: Suíte
+                style:
+                  top: 20%
+                  left: 25%
+                  font-weight: bold
+              - type: 'custom:paper-buttons-row'
+                buttons:
+                  - entity: counter.aspirar_suite_x
+                    icon: 'mdi:numeric-1-circle'
+                    name: false
+                    layout: icon|name
+                    tap_action:
+                      action: call-service
+                      service: counter.configure
+                      service_data:
+                        value: '1'
+                        entity_id: counter.aspirar_suite_x
+                    style:
+                      button:
+                        height: 5px
+                        width: 5px
+                      icon:
+                        height: 5px
+                        width: 5px
+                    state_styles:
+                      '1':
+                        icon:
+                          color: var(--accent-color)
+                  - entity: counter.aspirar_suite_x
+                    icon: 'mdi:numeric-2-circle'
+                    name: false
+                    layout: icon|name
+                    tap_action:
+                      action: call-service
+                      service: counter.configure
+                      service_data:
+                        value: '2'
+                        entity_id: counter.aspirar_suite_x
+                    style:
+                      button:
+                        height: 5px
+                        width: 5px
+                        margin: 20%
+                      icon:
+                        height: 5px
+                        width: 5px
+                    state_styles:
+                      '2':
+                        icon:
+                          color: var(--accent-color)
+                  - entity: counter.aspirar_suite_x
+                    icon: 'mdi:numeric-3-circle'
+                    name: false
+                    layout: icon|name
+                    tap_action:
+                      action: call-service
+                      service: counter.configure
+                      service_data:
+                        value: '3'
+                        entity_id: counter.aspirar_suite_x
+                    style:
+                      button:
+                        height: 5px
+                        width: 5px
+                      icon:
+                        height: 5px
+                        width: 5px
+                    state_styles:
+                      '3':
+                        icon:
+                          color: var(--accent-color)
+                style:
+                  top: 40%
+                  left: 15%
+                  transform: scale(1.7)
+            image: /local/roborock/sala4.jpg
+          - type: picture-elements
+            elements:
+              - type: 'custom:button-card'
+                entity: input_boolean.aspirar_wc_suite
+                layout: name_state
+                name: ' '
+                show_icon: false
+                show_state: false
+                show_name: true
+                styles:
+                  card:
+                    - width: 160px
+                    - height: 110px
+                    - opacity: 85%
+                style:
+                  top: 50%
+                  left: 50%
+                state:
+                  - value: 'on'
+                    styles:
+                      card:
+                        - filter: opacity(1%)
+              - type: 'custom:text-element'
+                text: WC Suíte
+                style:
+                  top: 20%
+                  left: 25%
+                  font-weight: bold
+              - type: 'custom:paper-buttons-row'
+                buttons:
+                  - entity: counter.aspirar_wc_suite_x
+                    icon: 'mdi:numeric-1-circle'
+                    name: false
+                    layout: icon|name
+                    tap_action:
+                      action: call-service
+                      service: counter.configure
+                      service_data:
+                        value: '1'
+                        entity_id: counter.aspirar_wc_suite_x
+                    style:
+                      button:
+                        height: 5px
+                        width: 5px
+                      icon:
+                        height: 5px
+                        width: 5px
+                    state_styles:
+                      '1':
+                        icon:
+                          color: var(--accent-color)
+                  - entity: counter.aspirar_wc_suite_x
+                    icon: 'mdi:numeric-2-circle'
+                    name: false
+                    layout: icon|name
+                    tap_action:
+                      action: call-service
+                      service: counter.configure
+                      service_data:
+                        value: '2'
+                        entity_id: counter.aspirar_wc_suite_x
+                    style:
+                      button:
+                        height: 5px
+                        width: 5px
+                        margin: 20%
+                      icon:
+                        height: 5px
+                        width: 5px
+                    state_styles:
+                      '2':
+                        icon:
+                          color: var(--accent-color)
+                  - entity: counter.aspirar_wc_suite_x
+                    icon: 'mdi:numeric-3-circle'
+                    name: false
+                    layout: icon|name
+                    tap_action:
+                      action: call-service
+                      service: counter.configure
+                      service_data:
+                        value: '3'
+                        entity_id: counter.aspirar_wc_suite_x
+                    style:
+                      button:
+                        height: 5px
+                        width: 5px
+                      icon:
+                        height: 5px
+                        width: 5px
+                    state_styles:
+                      '3':
+                        icon:
+                          color: var(--accent-color)
+                style:
+                  top: 40%
+                  left: 15%
+                  transform: scale(1.7)
+            image: /local/roborock/hall_rc.jpg
+        square: false
+  - type: vertical-stack
+    cards:
+      - type: horizontal-stack
+        cards:
+          - type: 'custom:button-card'
+            entity: input_text.clean_automation1
+            show_name: false
+            show_state: true
+            styles:
+              card:
+                - height: 35px
+                - background-color: green
+          - type: horizontal-stack
+            cards:
+              - type: 'custom:button-card'
+                color_type: blank-card
+              - type: 'custom:button-card'
+                icon: 'mdi:broom'
+                show_name: false
+                show_icon: true
+                tap_action:
+                  action: call-service
+                  service: automation.trigger
+                  service_data:
+                    entity_id:
+                      - automation.clean_profile_1
+                styles:
+                  card:
+                    - width: 70px
+                    - background-color: green
+              - type: 'custom:button-card'
+                entity: automation.clean_profile_1
+                color_type: card
+                show_name: false
+                icon: 'mdi:check'
+                tap_action:
+                  action: call-service
+                  service: automation.toggle
+                  service_data:
+                    entity_id:
+                      - automation.clean_profile_1
+                state:
+                  - value: 'on'
+                    styles:
+                      card:
+                        - background-color: green
+                    icon: 'mdi:check-circle'
+                  - value: 'off'
+                    color: grey
+                    styles:
+                      card:
+                        - filter: opacity(30%)
+                    icon: 'mdi:check-circle-outline'
+                styles:
+                  card:
+                    - width: 70px
+      - type: horizontal-stack
+        cards:
+          - type: 'custom:button-card'
+            entity: input_boolean.aspirar_cozinha1
+            show_icon: false
+            name: Cozinha
             tap_action:
               action: call-service
               service: input_boolean.toggle
               service_data:
                 entity_id:
-                  - input_boolean.aspirar_cozinha
-                  - input_boolean.aspirar_corredor
-                  - input_boolean.aspirar_escritorio
-                  - input_boolean.aspirar_wc_rc
-                  - input_boolean.aspirar_sala
-            styles:
-              card:
-                - width: 70px
-                - background-color: var(--accent-color)
-  - type: grid
-    cards:
-      - type: picture-elements
-        elements:
-          - type: 'custom:button-card'
-            entity: input_boolean.aspirar_cozinha
-            layout: name_state
-            name: ' '
-            show_icon: false
-            show_state: false
-            show_name: true
-            styles:
-              card:
-                - width: 160px
-                - height: 110px
-                - opacity: 85%
-            style:
-              top: 50%
-              left: 50%
+                  - input_boolean.aspirar_cozinha1
             state:
               - value: 'on'
                 styles:
                   card:
-                    - filter: opacity(1%)
-          - type: 'custom:text-element'
-            text: Cozinha
-            style:
-              top: 20%
-              left: 25%
-              font-weight: bold
-          - type: 'custom:paper-buttons-row'
-            buttons:
-              - entity: counter.aspirar_cozinha_x
-                icon: 'mdi:numeric-1-circle'
-                name: false
-                layout: icon|name
-                tap_action:
-                  action: call-service
-                  service: counter.configure
-                  service_data:
-                    value: '1'
-                    entity_id: counter.aspirar_cozinha_x
-                style:
-                  button:
-                    height: 5px
-                    width: 5px
-                  icon:
-                    height: 5px
-                    width: 5px
-                state_styles:
-                  '1':
-                    icon:
-                      color: var(--accent-color)
-              - entity: counter.aspirar_cozinha_x
-                icon: 'mdi:numeric-2-circle'
-                name: false
-                layout: icon|name
-                tap_action:
-                  action: call-service
-                  service: counter.configure
-                  service_data:
-                    value: '2'
-                    entity_id: counter.aspirar_cozinha_x
-                style:
-                  button:
-                    height: 5px
-                    width: 5px
-                    margin: 20%
-                  icon:
-                    height: 5px
-                    width: 5px
-                state_styles:
-                  '2':
-                    icon:
-                      color: var(--accent-color)
-              - entity: counter.aspirar_cozinha_x
-                icon: 'mdi:numeric-3-circle'
-                name: false
-                layout: icon|name
-                tap_action:
-                  action: call-service
-                  service: counter.configure
-                  service_data:
-                    value: '3'
-                    entity_id: counter.aspirar_cozinha_x
-                style:
-                  button:
-                    height: 5px
-                    width: 5px
-                  icon:
-                    height: 5px
-                    width: 5px
-                state_styles:
-                  '3':
-                    icon:
-                      color: var(--accent-color)
-            style:
-              top: 40%
-              left: 15%
-              transform: scale(1.7)
-        image: /local/roborock/kitchen.jpg
-      - type: picture-elements
-        elements:
-          - type: 'custom:button-card'
-            entity: input_boolean.aspirar_corredor
-            layout: name_state
-            name: ' '
-            show_icon: false
-            show_state: false
-            show_name: true
-            styles:
-              card:
-                - width: 160px
-                - height: 110px
-                - opacity: 85%
-            style:
-              top: 50%
-              left: 50%
-            state:
-              - value: 'on'
+                    - color: lime
+              - value: 'off'
                 styles:
                   card:
-                    - filter: opacity(1%)
-          - type: 'custom:text-element'
-            text: Corredor
-            style:
-              top: 20%
-              left: 25%
-              font-weight: bold
-          - type: 'custom:paper-buttons-row'
-            buttons:
-              - entity: counter.aspirar_corredor_x
-                icon: 'mdi:numeric-1-circle'
-                name: false
-                layout: icon|name
-                tap_action:
-                  action: call-service
-                  service: counter.configure
-                  service_data:
-                    value: '1'
-                    entity_id: counter.aspirar_corredor_x
-                style:
-                  button:
-                    height: 5px
-                    width: 5px
-                  icon:
-                    height: 5px
-                    width: 5px
-                state_styles:
-                  '1':
-                    icon:
-                      color: var(--accent-color)
-              - entity: counter.aspirar_corredor_x
-                icon: 'mdi:numeric-2-circle'
-                name: false
-                layout: icon|name
-                tap_action:
-                  action: call-service
-                  service: counter.configure
-                  service_data:
-                    value: '2'
-                    entity_id: counter.aspirar_corredor_x
-                style:
-                  button:
-                    height: 5px
-                    width: 5px
-                    margin: 20%
-                  icon:
-                    height: 5px
-                    width: 5px
-                state_styles:
-                  '2':
-                    icon:
-                      color: var(--accent-color)
-              - entity: counter.aspirar_corredor_x
-                icon: 'mdi:numeric-3-circle'
-                name: false
-                layout: icon|name
-                tap_action:
-                  action: call-service
-                  service: counter.configure
-                  service_data:
-                    value: '3'
-                    entity_id: counter.aspirar_corredor_x
-                style:
-                  button:
-                    height: 5px
-                    width: 5px
-                  icon:
-                    height: 5px
-                    width: 5px
-                state_styles:
-                  '3':
-                    icon:
-                      color: var(--accent-color)
-            style:
-              top: 40%
-              left: 15%
-              transform: scale(1.7)
-        image: /local/roborock/hall_rc.jpg
-      - type: picture-elements
-        elements:
+                    - filter: opacity(15%)
           - type: 'custom:button-card'
-            entity: input_boolean.aspirar_escritorio
-            layout: name_state
-            name: ' '
+            entity: input_boolean.aspirar_corredor1
             show_icon: false
-            show_state: false
-            show_name: true
-            styles:
-              card:
-                - width: 160px
-                - height: 110px
-                - opacity: 85%
-            style:
-              top: 50%
-              left: 50%
-            state:
-              - value: 'on'
-                styles:
-                  card:
-                    - filter: opacity(1%)
-          - type: 'custom:text-element'
-            text: Escritório
-            style:
-              top: 20%
-              left: 25%
-              font-weight: bold
-          - type: 'custom:paper-buttons-row'
-            buttons:
-              - entity: counter.aspirar_escritorio_x
-                icon: 'mdi:numeric-1-circle'
-                name: false
-                layout: icon|name
-                tap_action:
-                  action: call-service
-                  service: counter.configure
-                  service_data:
-                    value: '1'
-                    entity_id: counter.aspirar_escritorio_x
-                style:
-                  button:
-                    height: 5px
-                    width: 5px
-                  icon:
-                    height: 5px
-                    width: 5px
-                state_styles:
-                  '1':
-                    icon:
-                      color: var(--accent-color)
-              - entity: counter.aspirar_escritorio_x
-                icon: 'mdi:numeric-2-circle'
-                name: false
-                layout: icon|name
-                tap_action:
-                  action: call-service
-                  service: counter.configure
-                  service_data:
-                    value: '2'
-                    entity_id: counter.aspirar_escritorio_x
-                style:
-                  button:
-                    height: 5px
-                    width: 5px
-                    margin: 20%
-                  icon:
-                    height: 5px
-                    width: 5px
-                state_styles:
-                  '2':
-                    icon:
-                      color: var(--accent-color)
-              - entity: counter.aspirar_escritorio_x
-                icon: 'mdi:numeric-3-circle'
-                name: false
-                layout: icon|name
-                tap_action:
-                  action: call-service
-                  service: counter.configure
-                  service_data:
-                    value: '3'
-                    entity_id: counter.aspirar_escritorio_x
-                style:
-                  button:
-                    height: 5px
-                    width: 5px
-                  icon:
-                    height: 5px
-                    width: 5px
-                state_styles:
-                  '3':
-                    icon:
-                      color: var(--accent-color)
-            style:
-              top: 40%
-              left: 15%
-              transform: scale(1.7)
-        image: /local/roborock/office2.jpg
-      - type: picture-elements
-        elements:
-          - type: 'custom:button-card'
-            entity: input_boolean.aspirar_wc_rc
-            layout: name_state
-            name: ' '
-            show_icon: false
-            show_state: false
-            show_name: true
-            styles:
-              card:
-                - width: 160px
-                - height: 110px
-                - opacity: 85%
-            style:
-              top: 50%
-              left: 50%
-            state:
-              - value: 'on'
-                styles:
-                  card:
-                    - filter: opacity(1%)
-          - type: 'custom:text-element'
-            text: WC R/C
-            style:
-              top: 20%
-              left: 25%
-              font-weight: bold
-          - type: 'custom:paper-buttons-row'
-            buttons:
-              - entity: counter.aspirar_wc_rc_x
-                icon: 'mdi:numeric-1-circle'
-                name: false
-                layout: icon|name
-                tap_action:
-                  action: call-service
-                  service: counter.configure
-                  service_data:
-                    value: '1'
-                    entity_id: counter.aspirar_wc_rc_x
-                style:
-                  button:
-                    height: 5px
-                    width: 5px
-                  icon:
-                    height: 5px
-                    width: 5px
-                state_styles:
-                  '1':
-                    icon:
-                      color: var(--accent-color)
-              - entity: counter.aspirar_wc_rc_x
-                icon: 'mdi:numeric-2-circle'
-                name: false
-                layout: icon|name
-                tap_action:
-                  action: call-service
-                  service: counter.configure
-                  service_data:
-                    value: '2'
-                    entity_id: counter.aspirar_wc_rc_x
-                style:
-                  button:
-                    height: 5px
-                    width: 5px
-                    margin: 20%
-                  icon:
-                    height: 5px
-                    width: 5px
-                state_styles:
-                  '2':
-                    icon:
-                      color: var(--accent-color)
-              - entity: counter.aspirar_wc_rc_x
-                icon: 'mdi:numeric-3-circle'
-                name: false
-                layout: icon|name
-                tap_action:
-                  action: call-service
-                  service: counter.configure
-                  service_data:
-                    value: '3'
-                    entity_id: counter.aspirar_wc_rc_x
-                style:
-                  button:
-                    height: 5px
-                    width: 5px
-                  icon:
-                    height: 5px
-                    width: 5px
-                state_styles:
-                  '3':
-                    icon:
-                      color: var(--accent-color)
-            style:
-              top: 40%
-              left: 15%
-              transform: scale(1.7)
-        image: /local/roborock/wc RC.jpg
-      - type: picture-elements
-        elements:
-          - type: 'custom:button-card'
-            entity: input_boolean.aspirar_sala
-            layout: name_state
-            name: ' '
-            show_icon: false
-            show_state: false
-            show_name: true
-            styles:
-              card:
-                - width: 160px
-                - height: 110px
-                - opacity: 85%
-            style:
-              top: 50%
-              left: 50%
-            state:
-              - value: 'on'
-                styles:
-                  card:
-                    - filter: opacity(1%)
-          - type: 'custom:text-element'
-            text: Sala
-            style:
-              top: 20%
-              left: 25%
-              font-weight: bold
-          - type: 'custom:paper-buttons-row'
-            buttons:
-              - entity: counter.aspirar_sala_x
-                icon: 'mdi:numeric-1-circle'
-                name: false
-                layout: icon|name
-                tap_action:
-                  action: call-service
-                  service: counter.configure
-                  service_data:
-                    value: '1'
-                    entity_id: counter.aspirar_sala_x
-                style:
-                  button:
-                    height: 5px
-                    width: 5px
-                  icon:
-                    height: 5px
-                    width: 5px
-                state_styles:
-                  '1':
-                    icon:
-                      color: var(--accent-color)
-              - entity: counter.aspirar_sala_x
-                icon: 'mdi:numeric-2-circle'
-                name: false
-                layout: icon|name
-                tap_action:
-                  action: call-service
-                  service: counter.configure
-                  service_data:
-                    value: '2'
-                    entity_id: counter.aspirar_sala_x
-                style:
-                  button:
-                    height: 5px
-                    width: 5px
-                    margin: 20%
-                  icon:
-                    height: 5px
-                    width: 5px
-                state_styles:
-                  '2':
-                    icon:
-                      color: var(--accent-color)
-              - entity: counter.aspirar_sala_x
-                icon: 'mdi:numeric-3-circle'
-                name: false
-                layout: icon|name
-                tap_action:
-                  action: call-service
-                  service: counter.configure
-                  service_data:
-                    value: '3'
-                    entity_id: counter.aspirar_sala_x
-                style:
-                  button:
-                    height: 5px
-                    width: 5px
-                  icon:
-                    height: 5px
-                    width: 5px
-                state_styles:
-                  '3':
-                    icon:
-                      color: var(--accent-color)
-            style:
-              top: 40%
-              left: 15%
-              transform: scale(1.7)
-        image: /local/roborock/sala4.jpg
-      - type: picture-elements
-        elements:
-          - type: 'custom:button-card'
-            entity: input_boolean.aspirar_hall_rc
-            layout: name_state
-            name: ' '
-            show_icon: false
-            show_state: false
-            show_name: true
-            styles:
-              card:
-                - width: 160px
-                - height: 110px
-                - opacity: 85%
-            style:
-              top: 50%
-              left: 50%
-            state:
-              - value: 'on'
-                styles:
-                  card:
-                    - filter: opacity(1%)
-          - type: 'custom:text-element'
-            text: Hall R/C
-            style:
-              top: 20%
-              left: 25%
-              font-weight: bold
-          - type: 'custom:paper-buttons-row'
-            buttons:
-              - entity: counter.aspirar_hall_rc_x
-                icon: 'mdi:numeric-1-circle'
-                name: false
-                layout: icon|name
-                tap_action:
-                  action: call-service
-                  service: counter.configure
-                  service_data:
-                    value: '1'
-                    entity_id: counter.aspirar_hall_rc_x
-                style:
-                  button:
-                    height: 5px
-                    width: 5px
-                  icon:
-                    height: 5px
-                    width: 5px
-                state_styles:
-                  '1':
-                    icon:
-                      color: var(--accent-color)
-              - entity: counter.aspirar_hall_rc_x
-                icon: 'mdi:numeric-2-circle'
-                name: false
-                layout: icon|name
-                tap_action:
-                  action: call-service
-                  service: counter.configure
-                  service_data:
-                    value: '2'
-                    entity_id: counter.aspirar_hall_rc_x
-                style:
-                  button:
-                    height: 5px
-                    width: 5px
-                    margin: 20%
-                  icon:
-                    height: 5px
-                    width: 5px
-                state_styles:
-                  '2':
-                    icon:
-                      color: var(--accent-color)
-              - entity: counter.aspirar_hall_rc_x
-                icon: 'mdi:numeric-3-circle'
-                name: false
-                layout: icon|name
-                tap_action:
-                  action: call-service
-                  service: counter.configure
-                  service_data:
-                    value: '3'
-                    entity_id: counter.aspirar_hall_rc_x
-                style:
-                  button:
-                    height: 5px
-                    width: 5px
-                  icon:
-                    height: 5px
-                    width: 5px
-                state_styles:
-                  '3':
-                    icon:
-                      color: var(--accent-color)
-            style:
-              top: 40%
-              left: 15%
-              transform: scale(1.7)
-        image: /local/roborock/hall_rc.jpg
-    square: false
-  - type: horizontal-stack
-    cards:
-      - type: 'custom:button-card'
-        name: Piso 1
-        styles:
-          card:
-            - background-color: var(--accent-color)
-      - type: horizontal-stack
-        cards:
-          - type: 'custom:button-card'
-            color_type: blank-card
-          - type: 'custom:button-card'
-            icon: 'mdi:play'
-            tap_action:
-              action: call-service
-              service: script.aspirar_piso1
-            styles:
-              card:
-                - width: 70px
-                - background-color: var(--accent-color)
-          - type: 'custom:button-card'
-            icon: 'mdi:checkbox-multiple-marked'
+            name: Corredor
             tap_action:
               action: call-service
               service: input_boolean.toggle
               service_data:
                 entity_id:
-                  - input_boolean.aspirar_francisco
-                  - input_boolean.aspirar_maria
-                  - input_boolean.aspirar_hall_piso1
-                  - input_boolean.aspirar_wc_piso1
-                  - input_boolean.aspirar_suite
-                  - input_boolean.aspirar_wc_suite
-            styles:
-              card:
-                - width: 70px
-                - background-color: var(--accent-color)
-  - type: grid
+                  - input_boolean.aspirar_corredor1
+            state:
+              - value: 'on'
+                styles:
+                  card:
+                    - color: lime
+              - value: 'off'
+                styles:
+                  card:
+                    - filter: opacity(15%)
+          - type: 'custom:button-card'
+            entity: input_boolean.aspirar_escritorio1
+            show_icon: false
+            name: Escritório
+            tap_action:
+              action: call-service
+              service: input_boolean.toggle
+              service_data:
+                entity_id:
+                  - input_boolean.aspirar_escritorio1
+            state:
+              - value: 'on'
+                styles:
+                  card:
+                    - color: lime
+              - value: 'off'
+                styles:
+                  card:
+                    - filter: opacity(15%)
+      - type: horizontal-stack
+        cards:
+          - type: 'custom:button-card'
+            entity: input_boolean.aspirar_sala1
+            show_icon: false
+            name: Sala
+            tap_action:
+              action: call-service
+              service: input_boolean.toggle
+              service_data:
+                entity_id:
+                  - input_boolean.aspirar_sala1
+            state:
+              - value: 'on'
+                styles:
+                  card:
+                    - color: lime
+              - value: 'off'
+                styles:
+                  card:
+                    - filter: opacity(15%)
+          - type: 'custom:button-card'
+            entity: input_boolean.aspirar_wc_rc1
+            show_icon: false
+            name: WC R/C
+            tap_action:
+              action: call-service
+              service: input_boolean.toggle
+              service_data:
+                entity_id:
+                  - input_boolean.aspirar_wc_rc1
+            state:
+              - value: 'on'
+                styles:
+                  card:
+                    - color: lime
+              - value: 'off'
+                styles:
+                  card:
+                    - filter: opacity(15%)
+          - type: 'custom:button-card'
+            entity: input_boolean.aspirar_hall_rc1
+            show_icon: false
+            name: Hall R/C
+            tap_action:
+              action: call-service
+              service: input_boolean.toggle
+              service_data:
+                entity_id:
+                  - input_boolean.input_boolean.aspirar_hall_rc1
+            state:
+              - value: 'on'
+                styles:
+                  card:
+                    - color: lime
+              - value: 'off'
+                styles:
+                  card:
+                    - filter: opacity(15%)
+      - type: 'custom:button-card'
+        color_type: blank-card
+      - type: horizontal-stack
+        cards:
+          - type: 'custom:button-card'
+            entity: input_boolean.aspirar_francisco1
+            show_icon: false
+            name: Francisco
+            tap_action:
+              action: call-service
+              service: input_boolean.toggle
+              service_data:
+                entity_id:
+                  - input_boolean.aspirar_francisco1
+            state:
+              - value: 'on'
+                styles:
+                  card:
+                    - color: lime
+              - value: 'off'
+                styles:
+                  card:
+                    - filter: opacity(15%)
+          - type: 'custom:button-card'
+            entity: input_boolean.aspirar_maria1
+            show_icon: false
+            name: Maria
+            tap_action:
+              action: call-service
+              service: input_boolean.toggle
+              service_data:
+                entity_id:
+                  - input_boolean.aspirar_maria1
+            state:
+              - value: 'on'
+                styles:
+                  card:
+                    - color: lime
+              - value: 'off'
+                styles:
+                  card:
+                    - filter: opacity(15%)
+          - type: 'custom:button-card'
+            entity: input_boolean.aspirar_wc_piso11
+            show_icon: false
+            name: WC Piso1
+            tap_action:
+              action: call-service
+              service: input_boolean.toggle
+              service_data:
+                entity_id:
+                  - input_boolean.aspirar_wc_piso11
+            state:
+              - value: 'on'
+                styles:
+                  card:
+                    - color: lime
+              - value: 'off'
+                styles:
+                  card:
+                    - filter: opacity(15%)
+      - type: horizontal-stack
+        cards:
+          - type: 'custom:button-card'
+            entity: input_boolean.aspirar_hall_piso11
+            show_icon: false
+            name: Hall Piso1
+            tap_action:
+              action: call-service
+              service: input_boolean.toggle
+              service_data:
+                entity_id:
+                  - input_boolean.aspirar_hall_piso11
+            state:
+              - value: 'on'
+                styles:
+                  card:
+                    - color: lime
+              - value: 'off'
+                styles:
+                  card:
+                    - filter: opacity(15%)
+          - type: 'custom:button-card'
+            entity: input_boolean.aspirar_suite1
+            show_icon: false
+            name: Suíte
+            tap_action:
+              action: call-service
+              service: input_boolean.toggle
+              service_data:
+                entity_id:
+                  - input_boolean.aspirar_suite1
+            state:
+              - value: 'on'
+                styles:
+                  card:
+                    - color: lime
+              - value: 'off'
+                styles:
+                  card:
+                    - filter: opacity(15%)
+          - type: 'custom:button-card'
+            entity: input_boolean.aspirar_wc_suite1
+            show_icon: false
+            name: WC Suíte
+            tap_action:
+              action: call-service
+              service: input_boolean.toggle
+              service_data:
+                entity_id:
+                  - input_boolean.aspirar_wc_suite1
+            state:
+              - value: 'on'
+                styles:
+                  card:
+                    - color: lime
+              - value: 'off'
+                styles:
+                  card:
+                    - filter: opacity(15%)
+      - type: entities
+        entities:
+          - entity: input_datetime.clean_automation_daily1
+          - entity: input_datetime.clean_automation_schedule1
+  - type: vertical-stack
     cards:
-      - type: picture-elements
-        elements:
+      - type: horizontal-stack
+        cards:
           - type: 'custom:button-card'
-            entity: input_boolean.aspirar_francisco
-            layout: name_state
-            name: ' '
-            show_icon: false
-            show_state: false
-            show_name: true
+            entity: input_text.clean_automation2
+            show_name: false
+            show_state: true
             styles:
               card:
-                - width: 160px
-                - height: 110px
-                - opacity: 85%
-            style:
-              top: 50%
-              left: 50%
+                - height: 35px
+                - background-color: darkred
+          - type: horizontal-stack
+            cards:
+              - type: 'custom:button-card'
+                color_type: blank-card
+              - type: 'custom:button-card'
+                icon: 'mdi:broom'
+                show_name: false
+                show_icon: true
+                tap_action:
+                  action: call-service
+                  service: automation.trigger
+                  service_data:
+                    entity_id:
+                      - automation.clean_profile_2
+                styles:
+                  card:
+                    - width: 70px
+                    - background-color: darkred
+              - type: 'custom:button-card'
+                entity: automation.clean_profile_2
+                color_type: card
+                show_name: false
+                icon: 'mdi:check'
+                tap_action:
+                  action: call-service
+                  service: automation.toggle
+                  service_data:
+                    entity_id:
+                      - automation.clean_profile_2
+                state:
+                  - value: 'on'
+                    styles:
+                      card:
+                        - background-color: darkred
+                    icon: 'mdi:check-circle'
+                  - value: 'off'
+                    color: grey
+                    styles:
+                      card:
+                        - filter: opacity(30%)
+                    icon: 'mdi:check-circle-outline'
+                styles:
+                  card:
+                    - width: 70px
+      - type: horizontal-stack
+        cards:
+          - type: 'custom:button-card'
+            entity: input_boolean.aspirar_cozinha2
+            show_icon: false
+            name: Cozinha
+            tap_action:
+              action: call-service
+              service: input_boolean.toggle
+              service_data:
+                entity_id:
+                  - input_boolean.aspirar_cozinha2
             state:
               - value: 'on'
                 styles:
                   card:
-                    - filter: opacity(1%)
-          - type: 'custom:text-element'
-            text: Francisco
-            style:
-              top: 20%
-              left: 25%
-              font-weight: bold
-          - type: 'custom:paper-buttons-row'
-            buttons:
-              - entity: counter.aspirar_francisco_x
-                icon: 'mdi:numeric-1-circle'
-                name: false
-                layout: icon|name
-                tap_action:
-                  action: call-service
-                  service: counter.configure
-                  service_data:
-                    value: '1'
-                    entity_id: counter.aspirar_francisco_x
-                style:
-                  button:
-                    height: 5px
-                    width: 5px
-                  icon:
-                    height: 5px
-                    width: 5px
-                state_styles:
-                  '1':
-                    icon:
-                      color: var(--accent-color)
-              - entity: counter.aspirar_francisco_x
-                icon: 'mdi:numeric-2-circle'
-                name: false
-                layout: icon|name
-                tap_action:
-                  action: call-service
-                  service: counter.configure
-                  service_data:
-                    value: '2'
-                    entity_id: counter.aspirar_francisco_x
-                style:
-                  button:
-                    height: 5px
-                    width: 5px
-                    margin: 20%
-                  icon:
-                    height: 5px
-                    width: 5px
-                state_styles:
-                  '2':
-                    icon:
-                      color: var(--accent-color)
-              - entity: counter.aspirar_francisco_x
-                icon: 'mdi:numeric-3-circle'
-                name: false
-                layout: icon|name
-                tap_action:
-                  action: call-service
-                  service: counter.configure
-                  service_data:
-                    value: '3'
-                    entity_id: counter.aspirar_francisco_x
-                style:
-                  button:
-                    height: 5px
-                    width: 5px
-                  icon:
-                    height: 5px
-                    width: 5px
-                state_styles:
-                  '3':
-                    icon:
-                      color: var(--accent-color)
-            style:
-              top: 40%
-              left: 15%
-              transform: scale(1.7)
-        image: /local/roborock/kitchen.jpg
-      - type: picture-elements
-        elements:
+                    - color: red
+              - value: 'off'
+                styles:
+                  card:
+                    - filter: opacity(15%)
           - type: 'custom:button-card'
-            entity: input_boolean.aspirar_maria
-            layout: name_state
-            name: ' '
+            entity: input_boolean.aspirar_corredor2
             show_icon: false
-            show_state: false
-            show_name: true
-            styles:
-              card:
-                - width: 160px
-                - height: 110px
-                - opacity: 85%
-            style:
-              top: 50%
-              left: 50%
+            name: Corredor
+            tap_action:
+              action: call-service
+              service: input_boolean.toggle
+              service_data:
+                entity_id:
+                  - input_boolean.aspirar_corredor2
             state:
               - value: 'on'
                 styles:
                   card:
-                    - filter: opacity(1%)
-          - type: 'custom:text-element'
-            text: Maria
-            style:
-              top: 20%
-              left: 25%
-              font-weight: bold
-          - type: 'custom:paper-buttons-row'
-            buttons:
-              - entity: counter.aspirar_maria_x
-                icon: 'mdi:numeric-1-circle'
-                name: false
-                layout: icon|name
-                tap_action:
-                  action: call-service
-                  service: counter.configure
-                  service_data:
-                    value: '1'
-                    entity_id: counter.aspirar_maria_x
-                style:
-                  button:
-                    height: 5px
-                    width: 5px
-                  icon:
-                    height: 5px
-                    width: 5px
-                state_styles:
-                  '1':
-                    icon:
-                      color: var(--accent-color)
-              - entity: counter.aspirar_maria_x
-                icon: 'mdi:numeric-2-circle'
-                name: false
-                layout: icon|name
-                tap_action:
-                  action: call-service
-                  service: counter.configure
-                  service_data:
-                    value: '2'
-                    entity_id: counter.aspirar_maria_x
-                style:
-                  button:
-                    height: 5px
-                    width: 5px
-                    margin: 20%
-                  icon:
-                    height: 5px
-                    width: 5px
-                state_styles:
-                  '2':
-                    icon:
-                      color: var(--accent-color)
-              - entity: counter.aspirar_maria_x
-                icon: 'mdi:numeric-3-circle'
-                name: false
-                layout: icon|name
-                tap_action:
-                  action: call-service
-                  service: counter.configure
-                  service_data:
-                    value: '3'
-                    entity_id: counter.aspirar_maria_x
-                style:
-                  button:
-                    height: 5px
-                    width: 5px
-                  icon:
-                    height: 5px
-                    width: 5px
-                state_styles:
-                  '3':
-                    icon:
-                      color: var(--accent-color)
-            style:
-              top: 40%
-              left: 15%
-              transform: scale(1.7)
-        image: /local/roborock/hall_rc.jpg
-      - type: picture-elements
-        elements:
+                    - color: red
+              - value: 'off'
+                styles:
+                  card:
+                    - filter: opacity(15%)
           - type: 'custom:button-card'
-            entity: input_boolean.aspirar_wc_piso1
-            layout: name_state
-            name: ' '
+            entity: input_boolean.aspirar_escritorio2
             show_icon: false
-            show_state: false
-            show_name: true
-            styles:
-              card:
-                - width: 160px
-                - height: 110px
-                - opacity: 85%
-            style:
-              top: 50%
-              left: 50%
+            name: Escritório
+            tap_action:
+              action: call-service
+              service: input_boolean.toggle
+              service_data:
+                entity_id:
+                  - input_boolean.aspirar_escritorio2
             state:
               - value: 'on'
                 styles:
                   card:
-                    - filter: opacity(1%)
-          - type: 'custom:text-element'
-            text: WC Piso1
-            style:
-              top: 20%
-              left: 25%
-              font-weight: bold
-          - type: 'custom:paper-buttons-row'
-            buttons:
-              - entity: counter.aspirar_wc_piso1_x
-                icon: 'mdi:numeric-1-circle'
-                name: false
-                layout: icon|name
-                tap_action:
-                  action: call-service
-                  service: counter.configure
-                  service_data:
-                    value: '1'
-                    entity_id: counter.aspirar_wc_piso1_x
-                style:
-                  button:
-                    height: 5px
-                    width: 5px
-                  icon:
-                    height: 5px
-                    width: 5px
-                state_styles:
-                  '1':
-                    icon:
-                      color: var(--accent-color)
-              - entity: counter.aspirar_wc_piso1_x
-                icon: 'mdi:numeric-2-circle'
-                name: false
-                layout: icon|name
-                tap_action:
-                  action: call-service
-                  service: counter.configure
-                  service_data:
-                    value: '2'
-                    entity_id: counter.aspirar_wc_piso1_x
-                style:
-                  button:
-                    height: 5px
-                    width: 5px
-                    margin: 20%
-                  icon:
-                    height: 5px
-                    width: 5px
-                state_styles:
-                  '2':
-                    icon:
-                      color: var(--accent-color)
-              - entity: counter.aspirar_wc_piso1_x
-                icon: 'mdi:numeric-3-circle'
-                name: false
-                layout: icon|name
-                tap_action:
-                  action: call-service
-                  service: counter.configure
-                  service_data:
-                    value: '3'
-                    entity_id: counter.aspirar_wc_piso1_x
-                style:
-                  button:
-                    height: 5px
-                    width: 5px
-                  icon:
-                    height: 5px
-                    width: 5px
-                state_styles:
-                  '3':
-                    icon:
-                      color: var(--accent-color)
-            style:
-              top: 40%
-              left: 15%
-              transform: scale(1.7)
-        image: /local/roborock/office2.jpg
-      - type: picture-elements
-        elements:
+                    - color: red
+              - value: 'off'
+                styles:
+                  card:
+                    - filter: opacity(15%)
+      - type: horizontal-stack
+        cards:
           - type: 'custom:button-card'
-            entity: input_boolean.aspirar_hall_piso1
-            layout: name_state
-            name: ' '
+            entity: input_boolean.aspirar_sala2
             show_icon: false
-            show_state: false
-            show_name: true
-            styles:
-              card:
-                - width: 160px
-                - height: 110px
-                - opacity: 85%
-            style:
-              top: 50%
-              left: 50%
+            name: Sala
+            tap_action:
+              action: call-service
+              service: input_boolean.toggle
+              service_data:
+                entity_id:
+                  - input_boolean.aspirar_sala2
             state:
               - value: 'on'
                 styles:
                   card:
-                    - filter: opacity(1%)
-          - type: 'custom:text-element'
-            text: Hall Piso1
-            style:
-              top: 20%
-              left: 25%
-              font-weight: bold
-          - type: 'custom:paper-buttons-row'
-            buttons:
-              - entity: counter.aspirar_hall_piso1_x
-                icon: 'mdi:numeric-1-circle'
-                name: false
-                layout: icon|name
-                tap_action:
-                  action: call-service
-                  service: counter.configure
-                  service_data:
-                    value: '1'
-                    entity_id: counter.aspirar_hall_piso1_x
-                style:
-                  button:
-                    height: 5px
-                    width: 5px
-                  icon:
-                    height: 5px
-                    width: 5px
-                state_styles:
-                  '1':
-                    icon:
-                      color: var(--accent-color)
-              - entity: counter.aspirar_hall_piso1_x
-                icon: 'mdi:numeric-2-circle'
-                name: false
-                layout: icon|name
-                tap_action:
-                  action: call-service
-                  service: counter.configure
-                  service_data:
-                    value: '2'
-                    entity_id: counter.aspirar_hall_piso1_x
-                style:
-                  button:
-                    height: 5px
-                    width: 5px
-                    margin: 20%
-                  icon:
-                    height: 5px
-                    width: 5px
-                state_styles:
-                  '2':
-                    icon:
-                      color: var(--accent-color)
-              - entity: counter.aspirar_hall_piso1_x
-                icon: 'mdi:numeric-3-circle'
-                name: false
-                layout: icon|name
-                tap_action:
-                  action: call-service
-                  service: counter.configure
-                  service_data:
-                    value: '3'
-                    entity_id: counter.aspirar_hall_piso1_x
-                style:
-                  button:
-                    height: 5px
-                    width: 5px
-                  icon:
-                    height: 5px
-                    width: 5px
-                state_styles:
-                  '3':
-                    icon:
-                      color: var(--accent-color)
-            style:
-              top: 40%
-              left: 15%
-              transform: scale(1.7)
-        image: /local/roborock/wc RC.jpg
-      - type: picture-elements
-        elements:
+                    - color: red
+              - value: 'off'
+                styles:
+                  card:
+                    - filter: opacity(15%)
           - type: 'custom:button-card'
-            entity: input_boolean.aspirar_suite
-            layout: name_state
-            name: ' '
+            entity: input_boolean.aspirar_wc_rc2
             show_icon: false
-            show_state: false
-            show_name: true
-            styles:
-              card:
-                - width: 160px
-                - height: 110px
-                - opacity: 85%
-            style:
-              top: 50%
-              left: 50%
+            name: WC R/C
+            tap_action:
+              action: call-service
+              service: input_boolean.toggle
+              service_data:
+                entity_id:
+                  - input_boolean.aspirar_wc_rc2
             state:
               - value: 'on'
                 styles:
                   card:
-                    - filter: opacity(1%)
-          - type: 'custom:text-element'
-            text: Suíte
-            style:
-              top: 20%
-              left: 25%
-              font-weight: bold
-          - type: 'custom:paper-buttons-row'
-            buttons:
-              - entity: counter.aspirar_suite_x
-                icon: 'mdi:numeric-1-circle'
-                name: false
-                layout: icon|name
-                tap_action:
-                  action: call-service
-                  service: counter.configure
-                  service_data:
-                    value: '1'
-                    entity_id: counter.aspirar_suite_x
-                style:
-                  button:
-                    height: 5px
-                    width: 5px
-                  icon:
-                    height: 5px
-                    width: 5px
-                state_styles:
-                  '1':
-                    icon:
-                      color: var(--accent-color)
-              - entity: counter.aspirar_suite_x
-                icon: 'mdi:numeric-2-circle'
-                name: false
-                layout: icon|name
-                tap_action:
-                  action: call-service
-                  service: counter.configure
-                  service_data:
-                    value: '2'
-                    entity_id: counter.aspirar_suite_x
-                style:
-                  button:
-                    height: 5px
-                    width: 5px
-                    margin: 20%
-                  icon:
-                    height: 5px
-                    width: 5px
-                state_styles:
-                  '2':
-                    icon:
-                      color: var(--accent-color)
-              - entity: counter.aspirar_suite_x
-                icon: 'mdi:numeric-3-circle'
-                name: false
-                layout: icon|name
-                tap_action:
-                  action: call-service
-                  service: counter.configure
-                  service_data:
-                    value: '3'
-                    entity_id: counter.aspirar_suite_x
-                style:
-                  button:
-                    height: 5px
-                    width: 5px
-                  icon:
-                    height: 5px
-                    width: 5px
-                state_styles:
-                  '3':
-                    icon:
-                      color: var(--accent-color)
-            style:
-              top: 40%
-              left: 15%
-              transform: scale(1.7)
-        image: /local/roborock/sala4.jpg
-      - type: picture-elements
-        elements:
+                    - color: red
+              - value: 'off'
+                styles:
+                  card:
+                    - filter: opacity(15%)
           - type: 'custom:button-card'
-            entity: input_boolean.aspirar_wc_suite
-            layout: name_state
-            name: ' '
+            entity: input_boolean.aspirar_hall_rc2
             show_icon: false
-            show_state: false
-            show_name: true
-            styles:
-              card:
-                - width: 160px
-                - height: 110px
-                - opacity: 85%
-            style:
-              top: 50%
-              left: 50%
+            name: Hall R/C
+            tap_action:
+              action: call-service
+              service: input_boolean.toggle
+              service_data:
+                entity_id:
+                  - input_boolean.input_boolean.aspirar_hall_rc2
             state:
               - value: 'on'
                 styles:
                   card:
-                    - filter: opacity(1%)
-          - type: 'custom:text-element'
-            text: WC Suíte
-            style:
-              top: 20%
-              left: 25%
-              font-weight: bold
-          - type: 'custom:paper-buttons-row'
-            buttons:
-              - entity: counter.aspirar_wc_suite_x
-                icon: 'mdi:numeric-1-circle'
-                name: false
-                layout: icon|name
+                    - color: red
+              - value: 'off'
+                styles:
+                  card:
+                    - filter: opacity(15%)
+      - type: 'custom:button-card'
+        color_type: blank-card
+      - type: horizontal-stack
+        cards:
+          - type: 'custom:button-card'
+            entity: input_boolean.aspirar_francisco2
+            show_icon: false
+            name: Francisco
+            tap_action:
+              action: call-service
+              service: input_boolean.toggle
+              service_data:
+                entity_id:
+                  - input_boolean.aspirar_francisco2
+            state:
+              - value: 'on'
+                styles:
+                  card:
+                    - color: red
+              - value: 'off'
+                styles:
+                  card:
+                    - filter: opacity(15%)
+          - type: 'custom:button-card'
+            entity: input_boolean.aspirar_maria2
+            show_icon: false
+            name: Maria
+            tap_action:
+              action: call-service
+              service: input_boolean.toggle
+              service_data:
+                entity_id:
+                  - input_boolean.aspirar_maria2
+            state:
+              - value: 'on'
+                styles:
+                  card:
+                    - color: red
+              - value: 'off'
+                styles:
+                  card:
+                    - filter: opacity(15%)
+          - type: 'custom:button-card'
+            entity: input_boolean.aspirar_wc_piso12
+            show_icon: false
+            name: WC Piso1
+            tap_action:
+              action: call-service
+              service: input_boolean.toggle
+              service_data:
+                entity_id:
+                  - input_boolean.aspirar_wc_piso12
+            state:
+              - value: 'on'
+                styles:
+                  card:
+                    - color: red
+              - value: 'off'
+                styles:
+                  card:
+                    - filter: opacity(15%)
+      - type: horizontal-stack
+        cards:
+          - type: 'custom:button-card'
+            entity: input_boolean.aspirar_hall_piso12
+            show_icon: false
+            name: Hall Piso1
+            tap_action:
+              action: call-service
+              service: input_boolean.toggle
+              service_data:
+                entity_id:
+                  - input_boolean.aspirar_hall_piso12
+            state:
+              - value: 'on'
+                styles:
+                  card:
+                    - color: red
+              - value: 'off'
+                styles:
+                  card:
+                    - filter: opacity(15%)
+          - type: 'custom:button-card'
+            entity: input_boolean.aspirar_suite2
+            show_icon: false
+            name: Suíte
+            tap_action:
+              action: call-service
+              service: input_boolean.toggle
+              service_data:
+                entity_id:
+                  - input_boolean.aspirar_suite2
+            state:
+              - value: 'on'
+                styles:
+                  card:
+                    - color: red
+              - value: 'off'
+                styles:
+                  card:
+                    - filter: opacity(15%)
+          - type: 'custom:button-card'
+            entity: input_boolean.aspirar_wc_suite2
+            show_icon: false
+            name: WC Suíte
+            tap_action:
+              action: call-service
+              service: input_boolean.toggle
+              service_data:
+                entity_id:
+                  - input_boolean.aspirar_wc_suite2
+            state:
+              - value: 'on'
+                styles:
+                  card:
+                    - color: red
+              - value: 'off'
+                styles:
+                  card:
+                    - filter: opacity(15%)
+      - type: entities
+        entities:
+          - entity: input_datetime.clean_automation_daily2
+          - entity: input_datetime.clean_automation_schedule2
+  - type: vertical-stack
+    cards:
+      - type: horizontal-stack
+        cards:
+          - type: 'custom:button-card'
+            entity: input_text.clean_automation3
+            show_name: false
+            show_state: true
+            styles:
+              card:
+                - height: 35px
+                - background-color: gold
+          - type: horizontal-stack
+            cards:
+              - type: 'custom:button-card'
+                color_type: blank-card
+              - type: 'custom:button-card'
+                icon: 'mdi:broom'
+                show_name: false
+                show_icon: true
                 tap_action:
                   action: call-service
-                  service: counter.configure
+                  service: automation.trigger
                   service_data:
-                    value: '1'
-                    entity_id: counter.aspirar_wc_suite_x
-                style:
-                  button:
-                    height: 5px
-                    width: 5px
-                  icon:
-                    height: 5px
-                    width: 5px
-                state_styles:
-                  '1':
-                    icon:
-                      color: var(--accent-color)
-              - entity: counter.aspirar_wc_suite_x
-                icon: 'mdi:numeric-2-circle'
-                name: false
-                layout: icon|name
+                    entity_id:
+                      - automation.clean_profile_3
+                styles:
+                  card:
+                    - width: 70px
+                    - background-color: gold
+              - type: 'custom:button-card'
+                entity: automation.clean_profile_3
+                color_type: card
+                show_name: false
+                icon: 'mdi:check'
                 tap_action:
                   action: call-service
-                  service: counter.configure
+                  service: automation.toggle
                   service_data:
-                    value: '2'
-                    entity_id: counter.aspirar_wc_suite_x
-                style:
-                  button:
-                    height: 5px
-                    width: 5px
-                    margin: 20%
-                  icon:
-                    height: 5px
-                    width: 5px
-                state_styles:
-                  '2':
-                    icon:
-                      color: var(--accent-color)
-              - entity: counter.aspirar_wc_suite_x
-                icon: 'mdi:numeric-3-circle'
-                name: false
-                layout: icon|name
-                tap_action:
-                  action: call-service
-                  service: counter.configure
-                  service_data:
-                    value: '3'
-                    entity_id: counter.aspirar_wc_suite_x
-                style:
-                  button:
-                    height: 5px
-                    width: 5px
-                  icon:
-                    height: 5px
-                    width: 5px
-                state_styles:
-                  '3':
-                    icon:
-                      color: var(--accent-color)
-            style:
-              top: 40%
-              left: 15%
-              transform: scale(1.7)
-        image: /local/roborock/hall_rc.jpg
-    square: false
+                    entity_id:
+                      - automation.clean_profile_3
+                state:
+                  - value: 'on'
+                    styles:
+                      card:
+                        - background-color: gold
+                    icon: 'mdi:check-circle'
+                  - value: 'off'
+                    color: grey
+                    styles:
+                      card:
+                        - filter: opacity(30%)
+                    icon: 'mdi:check-circle-outline'
+                styles:
+                  card:
+                    - width: 70px
+      - type: horizontal-stack
+        cards:
+          - type: 'custom:button-card'
+            entity: input_boolean.aspirar_cozinha3
+            show_icon: false
+            name: Cozinha
+            tap_action:
+              action: call-service
+              service: input_boolean.toggle
+              service_data:
+                entity_id:
+                  - input_boolean.aspirar_cozinha3
+            state:
+              - value: 'on'
+                styles:
+                  card:
+                    - color: yellow
+              - value: 'off'
+                styles:
+                  card:
+                    - filter: opacity(15%)
+          - type: 'custom:button-card'
+            entity: input_boolean.aspirar_corredor3
+            show_icon: false
+            name: Corredor
+            tap_action:
+              action: call-service
+              service: input_boolean.toggle
+              service_data:
+                entity_id:
+                  - input_boolean.aspirar_corredor3
+            state:
+              - value: 'on'
+                styles:
+                  card:
+                    - color: yellow
+              - value: 'off'
+                styles:
+                  card:
+                    - filter: opacity(15%)
+          - type: 'custom:button-card'
+            entity: input_boolean.aspirar_escritorio3
+            show_icon: false
+            name: Escritório
+            tap_action:
+              action: call-service
+              service: input_boolean.toggle
+              service_data:
+                entity_id:
+                  - input_boolean.aspirar_escritorio3
+            state:
+              - value: 'on'
+                styles:
+                  card:
+                    - color: yellow
+              - value: 'off'
+                styles:
+                  card:
+                    - filter: opacity(15%)
+      - type: horizontal-stack
+        cards:
+          - type: 'custom:button-card'
+            entity: input_boolean.aspirar_sala3
+            show_icon: false
+            name: Sala
+            tap_action:
+              action: call-service
+              service: input_boolean.toggle
+              service_data:
+                entity_id:
+                  - input_boolean.aspirar_sala3
+            state:
+              - value: 'on'
+                styles:
+                  card:
+                    - color: yellow
+              - value: 'off'
+                styles:
+                  card:
+                    - filter: opacity(15%)
+          - type: 'custom:button-card'
+            entity: input_boolean.aspirar_wc_rc3
+            show_icon: false
+            name: WC R/C
+            tap_action:
+              action: call-service
+              service: input_boolean.toggle
+              service_data:
+                entity_id:
+                  - input_boolean.aspirar_wc_rc3
+            state:
+              - value: 'on'
+                styles:
+                  card:
+                    - color: yellow
+              - value: 'off'
+                styles:
+                  card:
+                    - filter: opacity(15%)
+          - type: 'custom:button-card'
+            entity: input_boolean.aspirar_hall_rc3
+            show_icon: false
+            name: Hall R/C
+            tap_action:
+              action: call-service
+              service: input_boolean.toggle
+              service_data:
+                entity_id:
+                  - input_boolean.input_boolean.aspirar_hall_rc3
+            state:
+              - value: 'on'
+                styles:
+                  card:
+                    - color: yellow
+              - value: 'off'
+                styles:
+                  card:
+                    - filter: opacity(15%)
+      - type: 'custom:button-card'
+        color_type: blank-card
+      - type: horizontal-stack
+        cards:
+          - type: 'custom:button-card'
+            entity: input_boolean.aspirar_francisco3
+            show_icon: false
+            name: Francisco
+            tap_action:
+              action: call-service
+              service: input_boolean.toggle
+              service_data:
+                entity_id:
+                  - input_boolean.aspirar_francisco3
+            state:
+              - value: 'on'
+                styles:
+                  card:
+                    - color: yellow
+              - value: 'off'
+                styles:
+                  card:
+                    - filter: opacity(15%)
+          - type: 'custom:button-card'
+            entity: input_boolean.aspirar_maria3
+            show_icon: false
+            name: Maria
+            tap_action:
+              action: call-service
+              service: input_boolean.toggle
+              service_data:
+                entity_id:
+                  - input_boolean.aspirar_maria3
+            state:
+              - value: 'on'
+                styles:
+                  card:
+                    - color: yellow
+              - value: 'off'
+                styles:
+                  card:
+                    - filter: opacity(15%)
+          - type: 'custom:button-card'
+            entity: input_boolean.aspirar_wc_piso13
+            show_icon: false
+            name: WC Piso1
+            tap_action:
+              action: call-service
+              service: input_boolean.toggle
+              service_data:
+                entity_id:
+                  - input_boolean.aspirar_wc_piso13
+            state:
+              - value: 'on'
+                styles:
+                  card:
+                    - color: yellow
+              - value: 'off'
+                styles:
+                  card:
+                    - filter: opacity(15%)
+      - type: horizontal-stack
+        cards:
+          - type: 'custom:button-card'
+            entity: input_boolean.aspirar_hall_piso13
+            show_icon: false
+            name: Hall Piso1
+            tap_action:
+              action: call-service
+              service: input_boolean.toggle
+              service_data:
+                entity_id:
+                  - input_boolean.aspirar_hall_piso13
+            state:
+              - value: 'on'
+                styles:
+                  card:
+                    - color: yellow
+              - value: 'off'
+                styles:
+                  card:
+                    - filter: opacity(15%)
+          - type: 'custom:button-card'
+            entity: input_boolean.aspirar_suite3
+            show_icon: false
+            name: Suíte
+            tap_action:
+              action: call-service
+              service: input_boolean.toggle
+              service_data:
+                entity_id:
+                  - input_boolean.aspirar_suite3
+            state:
+              - value: 'on'
+                styles:
+                  card:
+                    - color: yellow
+              - value: 'off'
+                styles:
+                  card:
+                    - filter: opacity(15%)
+          - type: 'custom:button-card'
+            entity: input_boolean.aspirar_wc_suite3
+            show_icon: false
+            name: WC Suíte
+            tap_action:
+              action: call-service
+              service: input_boolean.toggle
+              service_data:
+                entity_id:
+                  - input_boolean.aspirar_wc_suite3
+            state:
+              - value: 'on'
+                styles:
+                  card:
+                    - color: yellow
+              - value: 'off'
+                styles:
+                  card:
+                    - filter: opacity(15%)
+      - type: entities
+        entities:
+          - entity: input_datetime.clean_automation_daily3
+          - entity: input_datetime.clean_automation_schedule3
