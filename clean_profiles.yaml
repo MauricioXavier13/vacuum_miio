@@ -1,0 +1,156 @@
+script:
+
+######################################
+## Roborock S5 Max - Clean Profiles ##
+######################################
+
+###Scripts to be executed depending on the profile/automation trigger (manual trigger, date or datetime).
+###Please be aware, that in this profiles, floor validation is not being done.
+###You should avoid to mix/activate rooms from different floors when enabling the room.
+
+  clean_profile_1:
+    alias: Clean Profile 1
+    sequence:
+      - service: vacuum.start
+        data:
+          entity_id: vacuum.roborock
+      - delay: "00:01:00"
+      - service: vacuum.stop
+        data:
+          entity_id: vacuum.roborock
+      - delay: "00:00:03"
+      - service: xiaomi_miio.vacuum_clean_segment
+        data_template:
+          entity_id: vacuum.roborock
+          segments: >-
+            [{%- if is_state('input_boolean.aspirar_cozinha1', 'on') -%}
+                18,
+            {%- endif %}
+            {%- if is_state('input_boolean.aspirar_escritorio1', 'on') -%}
+                16,
+            {%- endif -%}
+            {%- if is_state('input_boolean.aspirar_wc_rc1', 'on') -%}
+                17,
+            {%- endif %}
+            {%- if is_state('input_boolean.aspirar_corredor1', 'on') -%} 
+                19,
+            {%- endif %}
+            {%- if is_state('input_boolean.aspirar_sala1', 'on') -%}
+                20,
+            {%- endif %}
+            {%- if is_state('input_boolean.aspirar_francisco1', 'on') -%}
+                17,
+            {%- endif %}
+            {%- if is_state('input_boolean.aspirar_maria1', 'on') -%}
+                18,
+            {%- endif %}
+            {%- if is_state('input_boolean.aspirar_wc_piso11', 'on') -%}
+                16,
+            {%- endif %}
+            {%- if is_state('input_boolean.aspirar_hall_piso11', 'on') -%} 
+                19,
+            {%- endif %}
+            {%- if is_state('input_boolean.aspirar_suite1', 'on') -%}
+                20,
+            {%- endif %}
+            {%- if is_state('input_boolean.aspirar_wc_suite1', 'on') -%}
+                21,
+            {%- endif -%}]
+
+  clean_profile_2:
+    alias: Clean Profile 2
+    sequence:
+      - service: vacuum.start
+        data:
+          entity_id: vacuum.roborock
+      - delay: "00:01:00"
+      - service: vacuum.stop
+        data:
+          entity_id: vacuum.roborock
+      - delay: "00:00:03"
+      - service: xiaomi_miio.vacuum_clean_segment
+        data_template:
+          entity_id: vacuum.roborock
+          segments: >-
+            [{%- if is_state('input_boolean.aspirar_cozinha2', 'on') -%}
+                18,
+            {%- endif %}
+            {%- if is_state('input_boolean.aspirar_escritorio2', 'on') -%}
+                16,
+            {%- endif -%}
+            {%- if is_state('input_boolean.aspirar_wc_rc2', 'on') -%}
+                17,
+            {%- endif %}
+            {%- if is_state('input_boolean.aspirar_corredor2', 'on') -%} 
+                19,
+            {%- endif %}
+            {%- if is_state('input_boolean.aspirar_sala2', 'on') -%}
+                20,
+            {%- endif %}
+            {%- if is_state('input_boolean.aspirar_francisco2', 'on') -%}
+                17,
+            {%- endif %}
+            {%- if is_state('input_boolean.aspirar_maria2', 'on') -%}
+                18,
+            {%- endif %}
+            {%- if is_state('input_boolean.aspirar_wc_piso12', 'on') -%}
+                16,
+            {%- endif %}
+            {%- if is_state('input_boolean.aspirar_hall_piso12', 'on') -%} 
+                19,
+            {%- endif %}
+            {%- if is_state('input_boolean.aspirar_suite2', 'on') -%}
+                20,
+            {%- endif %}
+            {%- if is_state('input_boolean.aspirar_wc_suite2', 'on') -%}
+                21,
+            {%- endif -%}]
+            
+  clean_profile_3:
+    alias: Clean Profile 3
+    sequence:
+      - service: vacuum.start
+        data:
+          entity_id: vacuum.roborock
+      - delay: "00:01:00"
+      - service: vacuum.stop
+        data:
+          entity_id: vacuum.roborock
+      - delay: "00:00:03"
+      - service: xiaomi_miio.vacuum_clean_segment
+        data_template:
+          entity_id: vacuum.roborock
+          segments: >-
+            [{%- if is_state('input_boolean.aspirar_cozinha3', 'on') -%}
+                18,
+            {%- endif %}
+            {%- if is_state('input_boolean.aspirar_escritorio3', 'on') -%}
+                16,
+            {%- endif -%}
+            {%- if is_state('input_boolean.aspirar_wc_rc3', 'on') -%}
+                17,
+            {%- endif %}
+            {%- if is_state('input_boolean.aspirar_corredor3', 'on') -%} 
+                19,
+            {%- endif %}
+            {%- if is_state('input_boolean.aspirar_sala3', 'on') -%}
+                20,
+            {%- endif %}
+            {%- if is_state('input_boolean.aspirar_francisco3', 'on') -%}
+                17,
+            {%- endif %}
+            {%- if is_state('input_boolean.aspirar_maria3', 'on') -%}
+                18,
+            {%- endif %}
+            {%- if is_state('input_boolean.aspirar_wc_piso13', 'on') -%}
+                16,
+            {%- endif %}
+            {%- if is_state('input_boolean.aspirar_hall_piso13', 'on') -%} 
+                19,
+            {%- endif %}
+            {%- if is_state('input_boolean.aspirar_suite3', 'on') -%}
+                20,
+            {%- endif %}
+            {%- if is_state('input_boolean.aspirar_wc_suite3', 'on') -%}
+                21,
+            {%- endif -%}]
