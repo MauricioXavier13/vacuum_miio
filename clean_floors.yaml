@@ -1,26 +1,7 @@
 script:
-################################################
-## Roborock S5 Max - Clean rooms with repeats ##
-################################################
-
-# You need to find the segments/rooms to send in the params.
-# For more information about this see:
-# https://www.home-assistant.io/integrations/xiaomi_miio#retrieving-room-numbers
-
-####### This configuration is settled to multi floor setup. 
-####### Due to the map loaded in the app (mi home or roborock) you'll need to perform first a global clean (start) to load the map so the app/vacuum can load the correct map.
-####### Try the delay and define by your own. In some cases 30 seconds is enough.
-
-
-###### To single floor setups, just remove
-##     - service: vacuum.start
-##        data:
-##          entity_id: vacuum.roborock
-##      - delay: "00:01:00"
-##     - service: vacuum.stop
-##        data:
-##          entity_id: vacuum.roborock
-##     - delay: "00:00:03"
+#######################################################
+## Roborock S5 Max - Aspirar divisões com repetições ##
+#######################################################
 
   aspirar_rc:
     alias: Aspirar Rés do Chão
@@ -98,7 +79,7 @@ script:
         data_template:
           entity_id: vacuum.roborock
           segments: >-
-            {%- if is_state('input_boolean.aspirar_francisco', 'on') -%}
+            [{%- if is_state('input_boolean.aspirar_francisco', 'on') -%}
                {%- if is_state('counter.aspirar_francisco_x', '1') -%}
                   17,
                {%- elif is_state('counter.aspirar_francisco_x', '2') -%}               
@@ -106,7 +87,8 @@ script:
                {%- else -%}
                   17,17,17,
                {%- endif %}
-            {%- elif is_state('input_boolean.aspirar_maria', 'on') -%}
+            {%- endif %}
+            {%- if is_state('input_boolean.aspirar_maria', 'on') -%}
                {%- if is_state('counter.aspirar_maria_x', '1') -%}
                   18,
                {%- elif is_state('counter.aspirar_maria_x', '2') -%}               
@@ -114,7 +96,8 @@ script:
                {%- else -%}
                   18,18,18,
                {%- endif %}
-            {%- elif is_state('input_boolean.aspirar_wc_piso1', 'on') -%}
+            {%- endif %}
+            {%- if is_state('input_boolean.aspirar_wc_piso1', 'on') -%}
                {%- if is_state('counter.aspirar_wc_piso1_x', '1') -%}
                   16,
                {%- elif is_state('counter.aspirar_wc_piso1_x', '2') -%}               
@@ -122,7 +105,8 @@ script:
                {%- else -%}
                   16,16,16,
                {%- endif %}
-            {%- elif is_state('input_boolean.aspirar_hall_piso1', 'on') -%} 
+            {%- endif %}
+            {%- if is_state('input_boolean.aspirar_hall_piso1', 'on') -%} 
                {%- if is_state('counter.aspirar_hall_piso1_x', '1') -%}
                   19,
                {%- elif is_state('counter.aspirar_hall_piso1_x', '2') -%}               
@@ -130,7 +114,8 @@ script:
                {%- else -%}
                   19,19,19,
                {%- endif %}
-            {%- elif is_state('input_boolean.aspirar_suite', 'on') -%}
+            {%- endif %}
+            {%- if is_state('input_boolean.aspirar_suite', 'on') -%}
                {%- if is_state('counter.aspirar_suite_x', '1') -%}
                   20,
                {%- elif is_state('counter.aspirar_suite_x', '2') -%}               
@@ -138,7 +123,8 @@ script:
                {%- else -%}
                   20,20,20,
                {%- endif %}
-            {%- elif is_state('input_boolean.aspirar_wc_suite', 'on') -%}
+            {%- endif %}
+            {%- if is_state('input_boolean.aspirar_wc_suite', 'on') -%}
                {%- if is_state('counter.aspirar_wc_suite_x', '1') -%}
                   21,
                {%- elif is_state('counter.aspirar_wc_suite_x', '2') -%}               
@@ -146,4 +132,4 @@ script:
                {%- else -%}
                   21,21,21,
                {%- endif %}
-            {%- endif -%}
+            {%- endif -%}]
