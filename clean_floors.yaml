@@ -19,7 +19,8 @@ script:
 #        data:
 #          entity_id: vacuum.roborock
 #      - delay: "00:00:03"
-### And start immediately with service: xiaomi_miio.vacuum_clean_segment
+### And start immediately with service: xiaomi_miio.vacuum_clean_segment.
+### Don't forget to get your segments params.
 
   aspirar_rc:
     alias: Aspirar Rés do Chão
