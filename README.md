@@ -17,6 +17,12 @@ Pre-requisites:
   - custom:swipe-card | https://github.com/bramkragten/swipe-card
   - card-tools | https://github.com/thomasloven/lovelace-card-tools
 
+# Discover your segments params:
+# Use miio command-line tool:
+    miiocli vacuum --ip <ip of the vacuum> --token <your vacuum token> get_room_mapping
+    Bash
+  - https://www.home-assistant.io/integrations/xiaomi_miio#retrieving-room-numbers
+
 
 # main_controls_card
 
