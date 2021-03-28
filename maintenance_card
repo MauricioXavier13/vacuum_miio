@@ -3,6 +3,9 @@
 
 # For now, you can dismiss the swipe card and use just the entities one.
 
+#Step by Step:
+#1. Copy the code below to a manual card
+#2. Change entity: vacuum.roborock by your own vacuum entity.
 
 type: 'custom:swipe-card'
 cards:
