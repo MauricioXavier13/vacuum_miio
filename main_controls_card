@@ -1,5 +1,5 @@
 # Picture elements with vacuum and main controls
-! Don't forget to use the images and locate in the appropriate folder
+#! Don't forget to use the images and locate in the appropriate folder
 
 type: picture-elements
 elements:
