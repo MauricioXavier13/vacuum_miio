@@ -29,11 +29,30 @@ Pre-requisites:
 
 # main_controls_card
 
-<img width="268" alt="picture_elements_vacuum" src="https://user-images.githubusercontent.com/74264882/112748313-c959fa80-8fb2-11eb-8c1c-320e1f53a91f.png">
+![image](https://user-images.githubusercontent.com/74264882/112759735-405fb500-8fec-11eb-84e6-82fe5dc94d9b.png)
+
+
+
 
 # floor_room_selection_card
 
 <img width="271" alt="Manual Room Clean" src="https://user-images.githubusercontent.com/74264882/112748406-45ecd900-8fb3-11eb-9347-2748a5b65f62.png">
+
+# Clean Profile 1
+
+![image](https://user-images.githubusercontent.com/74264882/112759749-58cfcf80-8fec-11eb-8ff0-069de67cb66c.png)
+
+# Clean Profile 2
+
+![image](https://user-images.githubusercontent.com/74264882/112759767-6c7b3600-8fec-11eb-962b-7c632e59cbae.png)
+
+# Clean Profile 3
+
+![image](https://user-images.githubusercontent.com/74264882/112759780-77ce6180-8fec-11eb-862d-c5813599e8a5.png)
+
+# Maintenance Card
+
+![image](https://user-images.githubusercontent.com/74264882/112759792-8583e700-8fec-11eb-8fd5-32f21d98d744.png)
 
 Instructions step by step inside each card/Configuration file
 
