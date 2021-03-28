@@ -35,6 +35,7 @@ Pre-requisites:
 
 <img width="271" alt="Manual Room Clean" src="https://user-images.githubusercontent.com/74264882/112748406-45ecd900-8fb3-11eb-9347-2748a5b65f62.png">
 
+# Instructions step by step inside each card/configuration
 
 ![Screenshot_20210326-211007](https://user-images.githubusercontent.com/74264882/112693217-29985180-8e78-11eb-92e5-6ae0ec4c7024.jpg)
 ![Screenshot_20210326-211027](https://user-images.githubusercontent.com/74264882/112693236-32892300-8e78-11eb-9ba3-c1e965c91493.jpg)
