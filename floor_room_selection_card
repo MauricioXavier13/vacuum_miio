@@ -7,6 +7,7 @@
 #3. Change entities: input_booleans and counters by your own variables/helpers related to each room.
 #4. Put the rooms images in the respective path image associated in each picture-elements room select.
 #5. Create scripts for each floor (check scripts in this repository);
+
 #Step by Step (clean profiles):
 #6. Create 3 input booleans helpers by room (related to the 3 clean profiles)
 #7. Create 3 input date_time helpers (type: date) by room (related to the 3 clean profiles)
