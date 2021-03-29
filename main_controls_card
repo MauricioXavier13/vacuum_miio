@@ -140,7 +140,7 @@ elements:
         style:
           button:
             color: darkred
-                  - entity: vacuum.roborock
+      - entity: vacuum.roborock
         icon: 'mdi:delete-empty'
         name: false
         layout: icon|name
