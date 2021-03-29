@@ -2,7 +2,7 @@
 
 #Step by Step (manual clean):
 #1. Create one input_boolean helper by room
-#2. Create one counter helper by room (minimum 1 and maximum 3). 
+#2. Create one counter helper by room (minimum 1, maximum 3 and initial value 1). 
 #     The min and max are not relevant due to the fact that we use configure service but if you want to use and increment card you can still use this counter with the limits.
 #3. Change entities: input_booleans and counters by your own variables/helpers related to each room.
 #4. Put the rooms images in the respective path image associated in each picture-elements room select.
