@@ -40,9 +40,7 @@ cards:
           service_data:
             entity_id: vacuum.roborock
             command: reset_consumable
-            params:
-              key:
-                - side_brush_work_time
+            params: side_brush_work_time
           confirmation:
             text: Do you want to reset Side Brush?
       - type: attribute
@@ -57,9 +55,7 @@ cards:
           service_data:
             entity_id: vacuum.roborock
             command: reset_consumable
-            params:
-              key:
-                - filter_work_time
+            params: filter_work_time
           confirmation:
             text: Do you want to reset Filter?
       - type: attribute
@@ -74,9 +70,7 @@ cards:
           service_data:
             entity_id: vacuum.roborock
             command: reset_consumable
-            params:
-              key:
-                - sensor_dirty_time
+            params: sensor_dirty_time
           confirmation:
             text: Do you want to reset Sensor?
     title: Maintenance
