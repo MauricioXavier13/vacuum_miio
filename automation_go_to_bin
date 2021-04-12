@@ -27,11 +27,19 @@ action:
             conditions:
               - condition: numeric_state
                 entity_id: input_number.time_after_bin
-                above: '100'
+                above: '1'
               - condition: numeric_state
                 entity_id: input_number.area_after_bin
                 above: '120'
         sequence:
+          - service: vacuum.stop
+            target:
+              entity_id: vacuum.roborock
+          - delay:
+              hours: 0
+              minutes: 0
+              seconds: 2
+              milliseconds: 0
           - service: script.go_to_bin_auto
   - service: notify.homie_bot
     data:
