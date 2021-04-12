@@ -8,6 +8,8 @@ script:
 #3. Change by your own helpers (input numbers time and area if you defined with different names).
 
 
+### Go To Bin and reset the values ###
+
   go_to_bin_auto:
     alias: Go To Bin Auto
     sequence:
@@ -38,6 +40,4 @@ script:
           entity_id: input_number.area_after_bin
         data:
           value: "{{ (state_attr('vacuum.roborock','cleaned_area') | int) + (states('input_number.area_after_bin') | int) }}"
-            
-            
             
