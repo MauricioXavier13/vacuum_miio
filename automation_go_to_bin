@@ -1,0 +1,28 @@
+alias: Go to Bin - Vacuum
+description: ''
+trigger:
+  - platform: state
+    entity_id: vacuum.roborock
+    from: cleaning
+    to: returning
+condition: []
+action:
+  - service: script.update_variables_bin
+  - choose:
+      - conditions:
+          - condition: or
+            conditions:
+              - condition: numeric_state
+                entity_id: input_number.time_after_bin
+                above: '100'
+              - condition: numeric_state
+                entity_id: input_number.area_after_bin
+                above: '120'
+        sequence:
+          - service: script.go_to_bin_auto
+  - service: notify.homie_bot
+    data:
+      message: |
+        Time after last bin: {{states('input_number.time_after_bin')}}min.
+        Area after last bin: {{states('input_number.area_after_bin')}}m2.
+mode: single
