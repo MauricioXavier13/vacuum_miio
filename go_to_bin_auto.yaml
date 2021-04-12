@@ -1,0 +1,39 @@
+script:
+###########################################################
+## Roborock S5 Max - Go to Bin and set variables         ##
+###########################################################
+
+
+  go_to_bin_auto:
+    alias: Go To Bin Auto
+    sequence:
+      - service: xiaomi_miio.vacuum_goto
+        data:
+          entity_id: vacuum.roborock
+          x_coord: 26700
+          y_coord: 36100
+      - service: input_number.set_value
+        target:
+          entity_id:
+            - input_number.time_after_bin
+            - input_number.area_after_bin
+        data:
+          value: 0
+            
+### Sum last values to update sensors Go To Bin ###
+  update_variables_bin:
+    alias: Update Variables Bin
+    sequence:
+      - service: input_number.set_value
+        target:
+          entity_id: input_number.time_after_bin
+        data:
+          value: "{{ (state_attr('vacuum.roborock','cleaning_time') | int) + (states('input_number.time_after_bin') | int) }}"    
+      - service: input_number.set_value
+        target:
+          entity_id: input_number.area_after_bin
+        data:
+          value: "{{ (state_attr('vacuum.roborock','cleaned_area') | int) + (states('input_number.area_after_bin') | int) }}"
+            
+            
+            
