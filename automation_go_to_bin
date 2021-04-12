@@ -27,7 +27,7 @@ action:
             conditions:
               - condition: numeric_state
                 entity_id: input_number.time_after_bin
-                above: '1'
+                above: '100'
               - condition: numeric_state
                 entity_id: input_number.area_after_bin
                 above: '120'
