@@ -1,3 +1,16 @@
+###Automation to send the vacuum automatically to your bin coordinates.
+###You need to discover your bin coordinates. Usually the dock is located at 25500,25500.
+
+### You should also have the scripts (script.update_variables_bin and script.go_to_bin_auto).
+### Available in this repo.
+
+#Step by Step:
+#1. Copy the automation below
+#2. Change your vacuum entity
+#3. Create 2 helpers (input_number.time_after_bin and input_number.area_after_bin).
+#4. Change the notify telegram to your own bot and service.
+
+
 alias: Go to Bin - Vacuum
 description: ''
 trigger:
