@@ -3,6 +3,10 @@ script:
 ## Roborock S5 Max - Go to Bin and set variables         ##
 ###########################################################
 
+#1. Change your bin coordinates in go_to_bin_auto
+#2. Change your vacuum entity
+#3. Change by your own helpers (input numbers time and area if you defined with different names).
+
 
   go_to_bin_auto:
     alias: Go To Bin Auto
