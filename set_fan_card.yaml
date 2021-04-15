@@ -1,0 +1,23 @@
+script:
+################################################
+## Roborock S5 Max - Set fan mode in card     ##
+################################################
+
+  set_fan_card:
+    alias: Set Fan Card
+    sequence:
+      - service: vacuum.set_fan_speed
+        data:
+          entity_id: vacuum.roborock
+          fan_speed: >
+            {% if is_state_attr('vacuum.roborock', 'fan_speed', 'Silent') %}
+              Standard
+            {% elif is_state_attr('vacuum.roborock', 'fan_speed', 'Standard') %}
+              Medium
+            {% elif is_state_attr('vacuum.roborock', 'fan_speed', 'Medium') %}
+              Turbo
+            {% elif is_state_attr('vacuum.roborock', 'fan_speed', 'Turbo') %}
+              Gentle
+            {% else %}
+              Silent
+            {% endif %}
