@@ -9,20 +9,20 @@
 #5. Create scripts for each floor (check scripts in this repository);
 
 #Step by Step (clean profiles):
-#6. Create 3 input booleans helpers by room (related to the 3 clean profiles)
-#7. Create 3 input date_time helpers (type: date) by room (related to the 3 clean profiles)
+#6. Create 3 input booleans helpers by automation (related to the 3 clean profiles)
+#7. Create 3 input date_time helpers (type: time) by automation (related to the 3 clean profiles)
 #   If you just want to use my general helpers in this case, name them like:
 #   - entity: input_datetime.clean_automation_daily1
 #   - entity: input_datetime.clean_automation_daily2
 #   - entity: input_datetime.clean_automation_daily3
-#7. Create 3 input date_time helpers (type: datetime) by room (related to the 3 clean profiles)
+#7. Create 3 input date_time helpers (type: datetime) by automation (related to the 3 clean profiles)
 #   If you just want to use my general helpers in this case, name them like:
 #   - entity: input_datetime.clean_automation_schedule1
 #   - entity: input_datetime.clean_automation_schedule2
 #   - entity: input_datetime.clean_automation_schedule3
 #8. Change input booleans entities rooms1, rooms2, rooms 3 and so on (depending on how many rooms do you have).
 #9. Change input datetime (date and time) entities if you wrote with other names than suggested above.
-#10. Create 3 input text helpers by room (related to the name of the 3 clean profiles)
+#10. Create 3 input text helpers by automation (related to the name of the 3 clean profiles)
 #   If you just want to use my general helpers in this case, name them like:
 #   - entity: input_text.clean_automation1
 #   - entity: input_text.clean_automation2
