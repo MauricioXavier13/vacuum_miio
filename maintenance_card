@@ -6,67 +6,58 @@
 #Step by Step:
 #1. Copy the code below to a manual card
 #2. Change entity: vacuum.roborock by your own vacuum entity.
+#3. Confirm/Change your sensors entities.
 
-type: 'custom:swipe-card'
+type: custom:swipe-card
 cards:
-  - type: 'custom:bar-card'
+  - type: custom:bar-card
     entities:
-      - type: attribute
-        entity: vacuum.roborock
-        attribute: main_brush_left
+      - entity: sensor.roborock_vacuum_s5e_main_brush_left
         name: Main Brush
-        max: 300
-        icon: 'mdi:broom'
+        max: 1080000
+        icon: mdi:broom
         tap_action:
           action: call-service
-          service: vacuum.start
+          service: vacuum.send_command
           service_data:
             entity_id: vacuum.roborock
             command: reset_consumable
-            params:
-              key:
-                - side_brush_work_time
+            params: main_brush_work_time
           confirmation:
             text: Do you want to reset Main Brush?
-      - type: attribute
-        entity: vacuum.roborock
-        attribute: side_brush_left
+      - entity: sensor.roborock_vacuum_s5e_side_brush_left
         name: Side Brush
-        max: 200
-        icon: 'mdi:concourse-ci'
+        max: 720000
+        icon: mdi:brush
         tap_action:
           action: call-service
-          service: vacuum.start
+          service: vacuum.send_command
           service_data:
             entity_id: vacuum.roborock
             command: reset_consumable
             params: side_brush_work_time
           confirmation:
             text: Do you want to reset Side Brush?
-      - type: attribute
-        entity: vacuum.roborock
-        attribute: filter_left
+      - entity: sensor.roborock_vacuum_s5e_filter_left
         name: Filter Left
-        max: 150
-        icon: 'mdi:air-filter'
+        max: 540000
+        icon: mdi:air-filter
         tap_action:
           action: call-service
-          service: vacuum.start
+          service: vacuum.send_command
           service_data:
             entity_id: vacuum.roborock
             command: reset_consumable
             params: filter_work_time
           confirmation:
             text: Do you want to reset Filter?
-      - type: attribute
-        entity: vacuum.roborock
-        attribute: sensor_dirty_left
+      - entity: sensor.roborock_vacuum_s5e_sensor_dirty_left
         name: Sensor Dirty
-        max: 30
-        icon: 'mdi:leak'
+        max: 108000
+        icon: mdi:leak
         tap_action:
           action: call-service
-          service: vacuum.start
+          service: vacuum.send_command
           service_data:
             entity_id: vacuum.roborock
             command: reset_consumable
@@ -74,6 +65,6 @@ cards:
           confirmation:
             text: Do you want to reset Sensor?
     title: Maintenance
-    unit_of_measurement: h
+    unit_of_measurement: s
     positions:
       value: inside
