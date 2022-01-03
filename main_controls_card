@@ -4,8 +4,9 @@
 #Step by Step:
 #1. Copy the code below
 #2. Change entity: vacuum.roborock by your own vacuum entity.
-#3. Put the 2515610638.jpg in the respective path image: /local/roborock/2515610638.jpg
-#4. Discover your coordinates to send to bin location (last button) (docking station is 25500,25500)
+#3. Confirm/change your sensors entities.
+#4. Put the 2515610638.jpg in the respective path image: /local/roborock/2515610638.jpg
+#5. Discover your coordinates to send to bin location (last button) (docking station is 25500,25500)
 
 type: picture-elements
 elements:
@@ -27,7 +28,7 @@ elements:
   - type: state-label
     entity: vacuum.roborock
     attribute: battery_level
-    prefix: "\U0001F50B"
+    prefix: 🔋
     suffix: '%'
     style:
       top: 50%
@@ -35,58 +36,47 @@ elements:
       color: mediumseagreen
       font-size: 18px
   - type: state-label
-    entity: vacuum.roborock
-    attribute: cleaning_time
-    suffix: min
+    entity: sensor.roborock_vacuum_s5e_last_clean_duration
     prefix: 'Cleaning Time: '
     style:
       top: 15%
       left: 80%
       color: darkred
   - type: state-label
-    entity: vacuum.roborock
-    attribute: cleaned_area
-    suffix: m2
+    entity: sensor.roborock_vacuum_s5e_last_clean_area
     prefix: 'Cleaned Area: '
     style:
       top: 25%
       left: 80%
       color: darkred
   - type: state-label
-    entity: vacuum.roborock
-    attribute: total_cleaning_time
-    suffix: h
+    entity: sensor.roborock_vacuum_s5e_total_duration
     prefix: 'Total Time: '
     style:
       top: 40%
       left: 80%
       color: darkred
   - type: state-label
-    entity: vacuum.roborock
-    attribute: total_cleaned_area
-    suffix: m2
+    entity: sensor.roborock_vacuum_s5e_total_clean_area
     prefix: 'Total Area: '
     style:
       top: 50%
       left: 80%
       color: darkred
   - type: state-label
-    entity: vacuum.roborock
-    attribute: cleaning_count
+    entity: sensor.roborock_vacuum_s5e_total_clean_count
     prefix: 'Cycles: '
     style:
       top: 65%
       left: 80%
       color: darkred
   - type: state-label
-    entity: vacuum.roborock
-    attribute: mop_attached
-    prefix: "\U0001F4A7"
+    entity: binary_sensor.roborock_vacuum_s5e_mop_attached
+    prefix: 💧
     style:
       top: 70%
       left: 12%
       color: cyan
-      font-weight: bold
       font-size: 15px
   - type: state-label
     entity: vacuum.roborock
@@ -96,10 +86,10 @@ elements:
       left: 20%
       color: darkred
       font-size: 15px
-  - type: 'custom:paper-buttons-row'
+  - type: custom:paper-buttons-row
     buttons:
       - entity: vacuum.roborock
-        icon: 'mdi:play'
+        icon: mdi:play
         name: false
         layout: icon|name
         tap_action:
@@ -111,7 +101,7 @@ elements:
           button:
             color: darkred
       - entity: vacuum.roborock
-        icon: 'mdi:pause'
+        icon: mdi:pause
         name: false
         layout: icon|name
         tap_action:
@@ -123,7 +113,7 @@ elements:
           button:
             color: darkred
       - entity: vacuum.roborock
-        icon: 'mdi:stop'
+        icon: mdi:stop
         name: false
         layout: icon|name
         tap_action:
@@ -135,7 +125,7 @@ elements:
           button:
             color: darkred
       - entity: vacuum.roborock
-        icon: 'mdi:fan'
+        icon: mdi:fan
         name: false
         layout: icon|name
         tap_action:
@@ -145,7 +135,7 @@ elements:
           button:
             color: darkred
       - entity: vacuum.roborock
-        icon: 'mdi:home'
+        icon: mdi:home
         name: false
         layout: icon|name
         tap_action:
@@ -157,7 +147,7 @@ elements:
           button:
             color: darkred
       - entity: vacuum.roborock
-        icon: 'mdi:map-marker-radius'
+        icon: mdi:map-marker-radius
         name: false
         layout: icon|name
         tap_action:
@@ -169,7 +159,7 @@ elements:
           button:
             color: darkred
       - entity: vacuum.roborock
-        icon: 'mdi:delete-empty'
+        icon: mdi:delete-empty
         name: false
         layout: icon|name
         tap_action:
