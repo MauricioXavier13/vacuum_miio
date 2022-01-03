@@ -3,13 +3,6 @@ script:
 ## Roborock S5 Max - Go to Bin and set variables         ##
 ###########################################################
 
-#1. Change your bin coordinates in go_to_bin_auto
-#2. Change your vacuum entity
-#3. Change by your own helpers (input numbers time and area if you defined with different names).
-
-
-### Go To Bin and reset the values ###
-
   go_to_bin_auto:
     alias: Go To Bin Auto
     sequence:
@@ -34,10 +27,9 @@ script:
         target:
           entity_id: input_number.time_after_bin
         data:
-          value: "{{ (state_attr('vacuum.roborock','cleaning_time') | int) + (states('input_number.time_after_bin') | int) }}"    
+          value: "{{ (states('sensor.roborock_vacuum_s5e_last_clean_duration') | int) + (states('input_number.time_after_bin') | int) }}"    
       - service: input_number.set_value
         target:
           entity_id: input_number.area_after_bin
         data:
-          value: "{{ (state_attr('vacuum.roborock','cleaned_area') | int) + (states('input_number.area_after_bin') | int) }}"
-            
+          value: "{{ (states('sensor.roborock_vacuum_s5e_last_clean_area') | int) + (states('input_number.area_after_bin') | int) }}"
