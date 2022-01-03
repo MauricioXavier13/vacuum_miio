@@ -27,7 +27,7 @@ action:
             conditions:
               - condition: numeric_state
                 entity_id: input_number.time_after_bin
-                above: '100'
+                above: '6000'
               - condition: numeric_state
                 entity_id: input_number.area_after_bin
                 above: '120'
@@ -41,9 +41,14 @@ action:
               seconds: 2
               milliseconds: 0
           - service: script.go_to_bin_auto
-  - service: notify.homie_bot
-    data:
-      message: |
-        Time after last bin: {{states('input_number.time_after_bin')}}min.
-        Area after last bin: {{states('input_number.area_after_bin')}}m2.
+      - conditions: []
+        sequence:
+          - service: notify.homie_bot
+            data:
+              message: >
+                {{"\U000023F1"}} Time after last bin:
+                {{states('input_number.time_after_bin')}}min.
+
+                {{"\U0001F4D0"}} Area after last bin:
+                {{states('input_number.area_after_bin')}}m2.
 mode: single
